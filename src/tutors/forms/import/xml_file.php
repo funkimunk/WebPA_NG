@@ -100,7 +100,7 @@ if ($errno == 0) {
           ->setParameter(1, $_module_id, ParameterType::INTEGER)
           ->execute();
 
-            $action_notify = '<p>The form has been uploaded and can be found in your <a href="/tutors/forms">my forms</a> list.</p>';
+            $action_notify = '<p>The form has been uploaded and can be found in your <a href="<?php echo APP__WWW ?>/tutors/forms">my forms</a> list.</p>';
         }
     } else {
         $action_notify = '<p>The import has failed due to the following reasons:</p>';

@@ -352,7 +352,7 @@ class UI
      */
     public function set_page_bar_button($text, $img, $link, $side = 'left')
     {
-        $this->_page_bar_buttons[$side][$text] = ['img' => "../images/buttons/$img", 'link' => $link];
+        $this->_page_bar_buttons[$side][$text] = ['img' => APP__WWW . '/images/buttons/' . $img, 'link' => $link];
     }
 
     // /->set_page_bar_button()

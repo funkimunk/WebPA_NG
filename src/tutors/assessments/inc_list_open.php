@@ -59,7 +59,7 @@ $assessments = $DB->getConnection()->fetchAllAssociative(
 if (!$assessments) {
     ?>
   <p>You do not have any assessments in this category.</p>
-  <p>Please choose another category from the tabs above, or <a href="/tutors/assessments/create/">create a new assessment</a>.</p>
+  <p>Please choose another category from the tabs above, or <a href="<?php echo APP__WWW ?>/tutors/assessments/create/">create a new assessment</a>.</p>
 <?php
 } else {
         ?>

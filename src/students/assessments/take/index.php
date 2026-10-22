@@ -427,7 +427,7 @@ if (!$assessment) {
   </div>
 
   <p>The assessment you selected could not be loaded for some reason - please go back and try again.</p>
-  <p>If the problem persists, please use the contact system to <a href="/students/support/contact/index.php?q=bug">report the error</a>.</p>
+  <p>If the problem persists, please use the contact system to <a href="<?php echo APP__WWW ?>/students/support/contact/index.php?q=bug">report the error</a>.</p>
 <?php
 } else {
         ?>
