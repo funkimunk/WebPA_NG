@@ -102,18 +102,22 @@ switch ($action) {
 
             $userRow = $dbConn->fetchAssociative($userQuery, [$uid], [ParameterType::INTEGER]);
 
-            $user->load_from_row($userRow);
-            $user->set_dao_object($DB);
-            $user->update_password($_POST['newpass']);
-            $user->save_user();
+            if (!$userRow) {
+                $content = 'User not found.';
+            } else {
+                $user->load_from_row($userRow);
+                $user->set_dao_object($DB);
+                $user->update_password($_POST['newpass']);
+                $user->save_user();
 
-            $DB->getConnection()->executeQuery(
-                'DELETE FROM ' . APP__DB_TABLE_PREFIX . 'user_reset_request WHERE user_id = ?',
-                [$uid],
-                [ParameterType::INTEGER]
-            );
+                $DB->getConnection()->executeQuery(
+                    'DELETE FROM ' . APP__DB_TABLE_PREFIX . 'user_reset_request WHERE user_id = ?',
+                    [$uid],
+                    [ParameterType::INTEGER]
+                );
 
-            $content = 'Your password has been reset. <a href="'.APP__WWW.'/login.php">Click here</a> to log in again.';
+                $content = 'Your password has been reset. <a href="'.APP__WWW.'/login.php">Click here</a> to log in again.';
+            }
         } else {
             $content = 'The two passwords did not match.';
         }

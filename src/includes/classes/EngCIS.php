@@ -93,6 +93,9 @@ class EngCIS
                 [ParameterType::STRING, ParameterType::INTEGER]
             );
         }
+        if (!$this->user) {
+            return [];
+        }
         if ($this->user->is_admin()) {
             $queryBuilder
                 ->select('lcm.module_id', 'lcm.module_title', 'lcm.module_code')
@@ -240,7 +243,7 @@ class EngCIS
         $queryBuilder = $this->_DAO->getConnection()->createQueryBuilder();
 
         $queryBuilder
-            ->select('module_id', 'COUNT(user_id')
+            ->select('module_id', 'COUNT(user_id)')
             ->from(APP__DB_TABLE_PREFIX . 'user_module', 'lcsm')
             ->where(
                 $queryBuilder->expr()->in('module_id', '?')
@@ -507,7 +510,7 @@ class EngCIS
         }
 
         // Ensure that the first record contains some dates as we could return a null record
-        if (!empty($dates['first'])) {
+        if (!empty($dates) && !empty($dates['first'])) {
             $years[] = AcademicYear::dateToYear(strtotime($dates['first']));
             $years[] = AcademicYear::dateToYear(strtotime($dates['last']));
         } else {

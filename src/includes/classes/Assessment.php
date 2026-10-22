@@ -160,9 +160,11 @@ class Assessment
             [ParameterType::STRING]
         );
 
-        $group_handler = new GroupHandler();
-        $collection = $group_handler->get_collection($collection);
-        $collection->delete();
+        if ($collection) {
+            $group_handler = new GroupHandler();
+            $collection = $group_handler->get_collection($collection);
+            $collection->delete();
+        }
 
         return true;
     }
@@ -586,10 +588,10 @@ class Assessment
         $params = null;
 
         if (!is_object($this->_xml_parser)) {
-            $xml_parser = new XMLParser();
+            $this->_xml_parser = new XMLParser();
         }
 
-        $xml_array = $xml_parser->parse($marking_params_xml);
+        $xml_array = $this->_xml_parser->parse($marking_params_xml);
 
         $params['weighting'] = $xml_array['parameters']['weighting']['_attributes']['value'];
         $params['penalty'] = $xml_array['parameters']['penalty']['_attributes']['value'];

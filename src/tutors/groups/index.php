@@ -29,7 +29,7 @@ $collections = $group_handler->get_module_collections($_module_id);
 // --------------------------------------------------------------------------------
 // Begin Page
 
-$UI->page_title = APP__NAME. ' ' . Generic::MY__GROUPS;;
+$UI->page_title = APP__NAME. ' ' . Generic::MY__GROUPS;
 $UI->menu_selected = Generic::MY__GROUPS;
 $UI->help_link = '?q=node/253';
 $UI->breadcrumbs = [
