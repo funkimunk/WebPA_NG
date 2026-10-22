@@ -446,7 +446,7 @@ class GroupCollection
      *
      * @return object Group object (or NULL)
      */
-    public function & get_group_object($group_id)
+    public function get_group_object($group_id): ?Group
     {
         if (!is_array($this->_groups)) {
             $this->refresh_groups();
@@ -462,7 +462,7 @@ class GroupCollection
             $new_group->set_dao_object($this->_DAO);
             $new_group->set_collection_object($this);
             $new_group->load($group_id);
-            $this->_group_objects[$group_id] =& $new_group;
+            $this->_group_objects[$group_id] = $new_group;
             return $new_group;
         }
         return null;
@@ -477,7 +477,7 @@ class GroupCollection
      * @param string $group_name Name of new group to add
      * @return array
      */
-    public function & new_group($group_name = 'new group')
+    public function new_group($group_name = 'new group'): Group
     {
         $new_group = new Group();
         $new_group->set_dao_object($this->_DAO);
@@ -486,7 +486,7 @@ class GroupCollection
         $new_group->set_collection_object($this);
 
         $this->_group[$new_group->id] = $new_group->get_as_array();
-        $this->_group_objects[$new_group->id] =& $new_group;
+        $this->_group_objects[$new_group->id] = $new_group;
         return $new_group;
     }
 
@@ -497,7 +497,7 @@ class GroupCollection
      *
      * @return object GroupIterator object
      */
-    public function & get_groups_iterator()
+    public function get_groups_iterator(): SimpleIterator
     {
         if (!$this->_groups) {
             $this->refresh_groups();
@@ -607,16 +607,17 @@ class GroupCollection
      *
      * @return array array of group objects
      */
-    public function & get_member_groups($user_id)
+    public function get_member_groups($user_id): array
     {
         $member_roles = $this->get_member_roles($user_id);
         if ($member_roles) {
-            $groups = null;
+            $groups = [];
             foreach ($member_roles as $group_id => $role) {
-                $groups[] =& $this->get_group_object($group_id);
+                $groups[] = $this->get_group_object($group_id);
             }
             return $groups;
         }
+        return [];
     }
 
     // /->get_member_groups()

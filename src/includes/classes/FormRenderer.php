@@ -52,9 +52,9 @@ class FormRenderer
     *
     * @param object $form_object  form object to use when rendering
     */
-    public function set_form(&$form_object)
+    public function set_form(Form $form_object): void
     {
-        $this->_form =& $form_object;
+        $this->_form = $form_object;
     }
 
     // /->set_form()

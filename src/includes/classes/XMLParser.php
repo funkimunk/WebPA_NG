@@ -1,39 +1,4 @@
 <?php
-/**
- * Class  : XMLParser
- *
- * Creates the following general array structure for each element
- * <code>
- * parent-tag => array  ('tag' => array ('_attributes' => {attrs} ,
- *                     '_data'      => {data} ,
- *                     'sub-tag1'   => array (...) ,
- *                     'sub-tag2'   => array (...) ,
- *                     ...
- *                    )
- *            )
- *
- * XML element types supported
- * <tag />
- * Gives: {attrs} = null
- *          {data} = null
- *
- * <tag attr1="a" attr2="b" />
- * Gives: {attrs} = array ( 'attr1' => 'a', 'attr2' => 'b' )
- *          {data} = null
- *
- * <tag attr1="a">some value</tag>
- * Gives: {attrs} = array ( 'attr1' => 'a' )
- *          {data} = 'some value'
- *
- * etc...
- * </code>
- *
- * @copyright Loughborough University
- * @license https://www.gnu.org/licenses/gpl-3.0.en.html GPL version 3
- *
- * @link https://github.com/webpa/webpa
- */
-
 namespace WebPA\includes\classes;
 
 class XMLParser
@@ -118,14 +83,13 @@ class XMLParser
         $this->_parser = xml_parser_create('');
 
         xml_parser_set_option($this->_parser, XML_OPTION_CASE_FOLDING, false);
-        xml_set_object($this->_parser, $this);
-        xml_set_element_handler($this->_parser, '_tag_open', '_tag_close');
-        xml_set_character_data_handler($this->_parser, '_tag_data');
+        xml_set_element_handler($this->_parser, [$this, '_tag_open'], [$this, '_tag_close']);
+        xml_set_character_data_handler($this->_parser, [$this, '_tag_data']);
 
         $this->xml_data = $xml_data;
         $this->xml_array = [];
         $this->_stack = [];
-        $this->_parent =& $this->xml_array;
+        $this->_parent = &$this->xml_array;
 
         $this->data = '';
         $this->_last_opened_tag = null;

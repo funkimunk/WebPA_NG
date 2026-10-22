@@ -68,7 +68,7 @@ class Assessment
     */
     public function __construct(DAO $DAO)
     {
-        $this->_DAO =& $DAO;
+        $this->_DAO = $DAO;
         $this->dbConn = $this->_DAO->getConnection();
         $this->_locked = null;
     }
@@ -207,7 +207,7 @@ class Assessment
         $this->close_date = strtotime($row['close_date']);
         $this->introduction = $row['introduction'];
         $this->allow_feedback = $row['allow_feedback'] == 1;
-        $this->assessment_type = $row['assessment_type'];;
+        $this->assessment_type = $row['assessment_type'];
         $this->allow_assessment_feedback = $row['student_feedback'];
         $this->email_opening = $row['email_opening'];
         $this->email_closing = $row['email_closing'];
@@ -328,7 +328,7 @@ class Assessment
     * Create a clone of this assessment
     * @return mixed
     */
-    public function & get_clone()
+    public function get_clone(): Assessment
     {
         $clone_assessment = new Assessment($this->_DAO);
         $clone_assessment->load($this->id);   // Creates an EXACT clone of this assessment
@@ -555,9 +555,9 @@ class Assessment
     * Set database connection
     * @param  object  $db  The database connection object to use
     */
-    public function set_db(& $db)
+    public function set_db(DAO $db): void
     {
-        $this->_DAO =& $db;
+        $this->_DAO = $db;
     }
 
     // /->set_db()
