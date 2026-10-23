@@ -10,6 +10,8 @@
 
 namespace WebPA\includes\classes;
 
+
+#[AllowDynamicProperties]
 class UI
 {
     public $page_title = '';
@@ -353,7 +355,7 @@ class UI
     public function set_page_bar_button($text, $img, $link, $side = 'left')
     {
         // Auto-prepend APP__WWW to relative image paths for portability
-        if (preg_match('/^(\.\.?\/)/', $img)) {
+        if ($img !== null && preg_match('/^(\.\.?\/)/', $img)) {
             $img = APP__WWW . '/' . ltrim($img, './');
         }
         $this->_page_bar_buttons[$side][$text] = ['img' => $img, 'link' => $link];

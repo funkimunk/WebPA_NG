@@ -31,8 +31,8 @@ class StringFunctions
         }
 
         $str = '';
-        while (strlen($str) < $length) {
-            $str .= substr($valid_chars, mt_rand(0, strlen($valid_chars) -1), 1);
+        while (strlen((string) $str) < $length) {
+            $str .= substr($valid_chars, mt_rand(0, strlen((string) $valid_chars) -1), 1);
         }
         return $str;
     }

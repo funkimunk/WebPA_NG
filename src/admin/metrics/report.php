@@ -154,7 +154,7 @@ function output_table($rows, $columns, $format)
     if ($format === 'html') {
         echo '<table class="grid">';
         foreach ($columns as $col) {
-            echo '<th>' . htmlspecialchars($col) . '</th>';
+            echo '<th>' . htmlspecialchars((string) $col, ENT_QUOTES, 'UTF-8') . '</th>';
         }
         foreach ($rows as $row) {
             echo '<tr>';

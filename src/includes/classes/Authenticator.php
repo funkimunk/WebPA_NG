@@ -14,6 +14,8 @@ namespace WebPA\includes\classes;
 
 use Doctrine\DBAL\ParameterType;
 
+
+#[AllowDynamicProperties]
 class Authenticator
 {
     // Public variables

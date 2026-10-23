@@ -12,6 +12,8 @@ namespace WebPA\includes\classes;
 
 use Doctrine\DBAL\ParameterType;
 
+
+#[AllowDynamicProperties]
 class GroupHandler
 {
     public $_DAO;  // [pmn] due to a poor iterator implementation, this is currently public

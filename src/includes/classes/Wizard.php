@@ -14,6 +14,8 @@ namespace WebPA\includes\classes;
 
 use WebPA\includes\functions\Common;
 
+
+#[AllowDynamicProperties]
 class Wizard
 {
     // Public Vars

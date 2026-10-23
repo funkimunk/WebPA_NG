@@ -11,7 +11,7 @@
 require_once 'includes/inc_global.php';
 
 $mod = '';
-if (isset($_SERVER['PATH_INFO']) && (strlen($_SERVER['PATH_INFO']) > 0)) {
+if (isset($_SERVER['PATH_INFO']) && (strlen((string) $_SERVER['PATH_INFO']) > 0)) {
     $mod = substr($_SERVER['PATH_INFO'], 1);
 } elseif (isset($_SERVER['QUERY_STRING'])) {
     $mod = $_SERVER['QUERY_STRING'];

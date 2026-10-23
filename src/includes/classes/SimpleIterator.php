@@ -13,6 +13,7 @@
 
 namespace WebPA\includes\classes;
 
+#[AllowDynamicProperties]
 class SimpleIterator
 {
     // Public Vars

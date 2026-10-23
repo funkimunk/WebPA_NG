@@ -1,6 +1,8 @@
 <?php
 namespace WebPA\includes\classes;
 
+
+#[AllowDynamicProperties]
 class XMLParser
 {
     // Public Vars
@@ -132,7 +134,7 @@ class XMLParser
                     // For backwards compatibility reasons, we do a check on if the sub_array is empty. Previously this was an in_array() check which always returned true
                     if (!empty($sub_array) && !empty($value['_attributes'])) {
                         foreach ($value['_attributes'] as $attr_name => $attr_value) {
-                            echo ' ' . $attr_name . '="' . htmlspecialchars($attr_value) . '"';
+                            echo ' ' . $attr_name . '="' . htmlspecialchars((string) $attr_value, ENT_QUOTES, 'UTF-8') . '"';
                         }
                     }
 
@@ -156,7 +158,7 @@ class XMLParser
                             if (in_array($tag, $this->_cdata_tags)) {
                                 echo "><![CDATA[$tag_data]]></$tag>\n";
                             } else {  // Else, just use the value
-                                echo '>' . htmlspecialchars($tag_data) . "</$tag>\n";
+                                echo '>' . htmlspecialchars((string) $tag_data, ENT_QUOTES, 'UTF-8') . "</$tag>\n";
                             }
                         }
                     }

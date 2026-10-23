@@ -16,6 +16,8 @@ use WebPA\includes\functions\AcademicYear;
 use WebPA\includes\functions\ArrayFunctions;
 use WebPA\includes\functions\Common;
 
+
+#[AllowDynamicProperties]
 class EngCIS
 {
     private $_DAO;

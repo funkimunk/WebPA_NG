@@ -12,6 +12,8 @@ namespace WebPA\includes\classes;
 
 use WebPA\includes\functions\Common;
 
+
+#[AllowDynamicProperties]
 class FormRenderer
 {
     // Public Vars

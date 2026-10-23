@@ -215,14 +215,12 @@ if ($action) {          //incase we want to do more than save changes in the fut
                   $params = [];
                   $types = [];
                   foreach ($update[APP__USER_TYPE_TUTOR] as $module) {
-                      $values[] = '(?, ?, ?, ?)';
+                      $values[] = '(?, ?, ?)';
                       $params[] = $user_id;
                       $params[] = $module;
                       $params[] = APP__USER_TYPE_TUTOR;
-                      $params[] = APP__USER_TYPE_TUTOR;
                       $types[] = ParameterType::INTEGER;
                       $types[] = ParameterType::INTEGER;
-                      $types[] = ParameterType::STRING;
                       $types[] = ParameterType::STRING;
                   }
                   if ($values) {
@@ -239,14 +237,12 @@ if ($action) {          //incase we want to do more than save changes in the fut
                   $params = [];
                   $types = [];
                   foreach ($update[APP__USER_TYPE_STUDENT] as $module) {
-                      $values[] = '(?, ?, ?, ?)';
+                      $values[] = '(?, ?, ?)';
                       $params[] = $user_id;
                       $params[] = $module;
                       $params[] = APP__USER_TYPE_STUDENT;
-                      $params[] = APP__USER_TYPE_STUDENT;
                       $types[] = ParameterType::INTEGER;
                       $types[] = ParameterType::INTEGER;
-                      $types[] = ParameterType::STRING;
                       $types[] = ParameterType::STRING;
                   }
                   if ($values) {

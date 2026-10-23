@@ -14,6 +14,7 @@
 
 namespace WebPA\includes\classes;
 
+#[AllowDynamicProperties]
 class SimpleObjectIterator
 {
     // Public Vars

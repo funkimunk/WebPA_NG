@@ -14,6 +14,7 @@ namespace WebPA\includes\classes;
 
 use Doctrine\DBAL\ParameterType;
 
+#[AllowDynamicProperties]
 class User
 {
     // Public Vars
@@ -80,14 +81,15 @@ class User
         if (is_array($user_info)) {
             $this->id = $user_info['user_id'];
             $this->admin = $user_info['admin'];
-            $this->id_number = $user_info['id_number'];
-            $this->department_id = $user_info['department_id'];
+            $this->id_number = $user_info['id_number'] ?? null;
+            $this->department_id = $user_info['department_id'] ?? null;
             $this->username = $user_info['username'];
             $this->source_id = $user_info['source_id'];
             $this->password = $user_info['password'];
             $this->forename = $user_info['forename'];
             $this->lastname = $user_info['lastname'];
             $this->email = $user_info['email'];
+            $this->type = $user_info['user_type'] ?? null;
             if ($this->admin) {
                 $this->type = APP__USER_TYPE_ADMIN;
             } else {

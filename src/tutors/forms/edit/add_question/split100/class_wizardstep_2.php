@@ -9,6 +9,7 @@
  * @link https://github.com/webpa/webpa
  */
 
+#[AllowDynamicProperties]
 class WizardStep2
 {
     // Public
