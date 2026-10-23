@@ -210,7 +210,7 @@ class Email
 
         $headers = '';
         foreach ($this->_headers as $header_name => $header_content) {
-            $headers .= "{$header_name}: {$header_content}\r\n";
+            $headers .= "$header_name: $header_content\r\n";
         }
 
         return mail($to, $subject, $message, $headers);

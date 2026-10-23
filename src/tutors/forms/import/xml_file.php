@@ -121,7 +121,7 @@ if ($errno == 0) {
 
 $UI->page_title = APP__NAME . ' load form';
 $UI->menu_selected = 'my forms';
-$UI->breadcrumbs = ['home' => '/', 'my forms'  => null];
+$UI->breadcrumbs = ['home' => '../../', 'my forms'  => null];
 
 $UI->set_page_bar_button('List Forms', '../../../../images/buttons/button_form_list.gif', '../');
 $UI->set_page_bar_button('Create a new Form', '../../../../images/buttons/button_form_create.gif', '../create/');

@@ -30,8 +30,8 @@ $collections = $group_handler->get_member_collections($_user->id, 'user');
 $UI->page_title = APP__NAME . ' my groups';
 $UI->menu_selected = 'my groups';
 $UI->help_link = '?q=node/329';
-$UI->breadcrumbs = ['home'         => '/',
-               'my groups'    => null, ];
+$UI->breadcrumbs = ['home'         => '../',
+                'my groups'    => null, ];
 
 $UI->head();
 ?>

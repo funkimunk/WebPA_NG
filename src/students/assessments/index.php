@@ -151,7 +151,7 @@ if ((!$open_assessments) && (!$pending_assessments) && (!$finished_assessments))
             echo '<div class="assessment_open">';
             echo '<table class="assessment_info" cellpadding="0" cellspacing="0">';
             echo '<tr>';
-            echo "  <td width=\"24\"><img src=\"../../images/icons/{$status}_icon.gif\" alt=\"$status_capitalized\" title=\"$status_capitalized\" height=\"24\" width=\"24\" /></td>";
+            echo "  <td width=\"24\"><img src=\"../../images/icons/$status_icon.gif\" alt=\"$status_capitalized\" title=\"$status_capitalized\" height=\"24\" width=\"24\" /></td>";
             echo '  <td valign="top">';
             echo '    <div class="assessment_info">';
             echo "      <div class=\"assessment_name\">{$assessment->name}</div>";
@@ -185,7 +185,7 @@ if ((!$open_assessments) && (!$pending_assessments) && (!$finished_assessments))
             echo '<div class="assessment">';
             echo '<table class="assessment_info" cellpadding="0" cellspacing="0">';
             echo '<tr>';
-            echo "  <td width=\"24\"><img src=\"../../images/icons/{$status}_icon.gif\" alt=\"$status_capitalized\" title=\"$status_capitalized\" height=\"24\" width=\"24\" /></td>";
+            echo "  <td width=\"24\"><img src=\"../../images/icons/$status_icon.gif\" alt=\"$status_capitalized\" title=\"$status_capitalized\" height=\"24\" width=\"24\" /></td>";
             echo '  <td valign="top">';
             echo '    <div class="assessment_info">';
             echo "      <div class=\"assessment_name\">{$assessment->name}</div>";
@@ -222,7 +222,7 @@ if ((!$open_assessments) && (!$pending_assessments) && (!$finished_assessments))
             echo '<div class="assessment_finished">';
             echo '<table class="assessment_info" cellpadding="0" cellspacing="0">';
             echo '<tr>';
-            echo "  <td width=\"24\"><img src=\"../../images/icons/{$status}_icon.gif\" alt=\"$status_capitalized\" title=\"$status_capitalized\" height=\"24\" width=\"24\" /></td>";
+            echo "  <td width=\"24\"><img src=\"../../images/icons/$status_icon.gif\" alt=\"$status_capitalized\" title=\"$status_capitalized\" height=\"24\" width=\"24\" /></td>";
             echo '  <td valign="top">';
             echo '    <div class="assessment_info">';
             echo "      <div class=\"assessment_name\">{$assessment->name}</div>";

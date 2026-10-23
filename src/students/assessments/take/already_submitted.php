@@ -41,9 +41,8 @@ $UI->page_title = ($assessment) ? $assessment->name : 'already submitted';
 $UI->menu_selected = 'my assessments';
 $UI->help_link = '?q=node/329';
 
-$UI->breadcrumbs = ['home'       => '/',
-               $assessment->name  => null,
-              ];
+$UI->breadcrumbs = ['home'       => '../',
+               $assessment->name  => null, ];
 $UI->head();
 $UI->content_start();
 ?>

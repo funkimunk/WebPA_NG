@@ -34,9 +34,9 @@ $UI->page_title = APP__NAME. ' ' . Generic::EDIT__GROUP;
 $UI->menu_selected = Generic::MY__GROUPS;
 $UI->help_link = '?q=node/253';
 $UI->breadcrumbs = [
-  'home'      => '/',
-  'my groups'   => '/groups/',
-  'edit groups' => null,
+  'home'        => '../../',
+  'my groups'   => '../',
+  $page_title   => null,
 ];
 
 $UI->set_page_bar_button(Generic::BTN__LIST_GROUPS, '../../../../images/buttons/button_group_list.gif', '../');

@@ -196,7 +196,7 @@ class FormRenderer
                 $q_num = $q + 1; ?>
         <div class="question">
 
-          <div class="question_text"><?php echo "{$q_num}. {$question['text']['_data']}"; ?></div>
+          <div class="question_text"><?php echo "$q_num. {$question['text']['_data']}"; ?></div>
 <?php
         if (array_key_exists('desc', $question)) {
             $question_desc = (array_key_exists('desc', $question)) ? $question['desc']['_data'] : '' ;
@@ -229,13 +229,13 @@ class FormRenderer
                 foreach ($this->_participants as $id => $name) {
                     $class = ($id==$this->participant_id) ? 'class="this_participant"' : '';
 
-                    $score = Common::fetch_POST("q_{$q}_{$id}");
+                    $score = Common::fetch_POST("q_$q_$id");
 
                     $initial_total += (int) $score;
 
-                    echo "<tr id=\"q_{$q}_{$id}\" $class>";
+                    echo "<tr id=\"q_$q_$id\" $class>";
                     echo "<td class=\"participant\" width=\"200\" valign=\"middle\">$name</th>\n";
-                    echo "<td><input type=\"text\" name=\"q_{$q}_{$id}\" id=\"q_{$q}_{$index}\" size=\"6\" maxlength=\"4\" value=\"$score\" onchange=\"calcTotal({$q},{$participant_count})\" onkeyup=\"calcTotal({$q},{$participant_count})\" /></label></td>\n";
+                    echo "<td><input type=\"text\" name=\"q_$q_$id\" id=\"q_$q_$index\" size=\"6\" maxlength=\"4\" value=\"$score\" onchange=\"calcTotal($q,$participant_count)\" onkeyup=\"calcTotal($q,$participant_count)\" /></label></td>\n";
                     $index++;
                 }
                 echo "</tr>\n";
@@ -251,7 +251,7 @@ class FormRenderer
                     }
                 }
 
-                echo "<tr><th style=\"text-align: right;\">Total&nbsp;</th><th><div style=\"background-color: $bgcolor;\" id=\"total_{$q}\">$initial_total</div></th></tr>"; ?>
+                echo "<tr><th style=\"text-align: right;\">Total&nbsp;</th><th><div style=\"background-color: $bgcolor;\" id=\"total_$q\">$initial_total</div></th></tr>"; ?>
           </table>
         </div>
 <?php
@@ -265,7 +265,7 @@ class FormRenderer
                 $min_score = $range[0];
                 $max_score = $range[1]; ?>
         <div class="question">
-          <div class="question_text"><?php echo "{$q_num}. {$question['text']['_data']}"; ?></div>
+          <div class="question_text"><?php echo "$q_num. {$question['text']['_data']}"; ?></div>
 <?php
         if (array_key_exists('desc', $question)) {
             $question_desc = (array_key_exists('desc', $question)) ? $question['desc']['_data'] : '' ;
@@ -298,11 +298,11 @@ class FormRenderer
                         && (array_key_exists("$q", $this->_results))
                         && (array_key_exists($id, $this->_results["$q"]))) ? $this->_results["$q"]["$id"] : null;
 
-                    echo "<tr id=\"q_{$q}_{$id}\" $class>";
+                    echo "<tr id=\"q_$q_$id\" $class>";
                     echo "<td class=\"participant\" width=\"200\" valign=\"middle\">$name</th>\n";
                     for ($score=$min_score; $score<=$max_score; $score++) {
                         $checked = ($q_score==$score) ? 'checked="checked"' : '';
-                        echo "<td width=\"40\" valign=\"middle\"><label for=\"q_{$q}_{$id}_{$score}\" style=\"display: block;\"><input type=\"radio\" name=\"q_{$q}_{$id}\" id=\"q_{$q}_{$id}_{$score}\" value=\"$score\" $checked /></label></td>\n";
+                        echo "<td width=\"40\" valign=\"middle\"><label for=\"q_$q_$id_$score\" style=\"display: block;\"><input type=\"radio\" name=\"q_$q_$id\" id=\"q_$q_$id_$score\" value=\"$score\" $checked /></label></td>\n";
                     }
                 }
                 echo "</tr>\n"; ?>

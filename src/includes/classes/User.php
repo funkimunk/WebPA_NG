@@ -263,11 +263,15 @@ class User
             [ParameterType::INTEGER]
         );
 
-        $dbConn->executeQuery(
-            'DELETE FROM ' . APP__DB_TABLE_PREFIX . 'user_justification WHERE marked_user_id = ? OR user_id = ?',
-            [$this->id, $this->id],
-            [ParameterType::INTEGER, ParameterType::INTEGER]
-        );
+        try {
+            $dbConn->executeQuery(
+                'DELETE FROM ' . APP__DB_TABLE_PREFIX . 'user_justification WHERE marked_user_id = ? OR user_id = ?',
+                [$this->id, $this->id],
+                [ParameterType::INTEGER, ParameterType::INTEGER]
+            );
+        } catch (\Doctrine\DBAL\Exception\TableNotFoundException $e) {
+            // Table doesn't exist — table was removed from schema
+        }
 
         $dbConn->executeQuery(
             'DELETE FROM ' . APP__DB_TABLE_PREFIX . 'user_mark WHERE marked_user_id = ? OR user_id = ?',

@@ -40,10 +40,10 @@ $this_year .= APP__ACADEMIC_YEAR_START_MONTH . '-01 00:00:00';
 $next_year = (string) ($year + 1) . $this_year;
 $this_year = (string) $year . $this_year;
 
-$tabs = ['pending'  => "?tab=pending&y={$year}",
-         'open'   => "?tab=open&y={$year}",
-         'closed'   => "?tab=closed&y={$year}",
-         'marked'   => "?tab=marked&y={$year}",
+$tabs = ['pending'  => "?tab=pending&y=$year",
+         'open'   => "?tab=open&y=$year",
+         'closed'   => "?tab=closed&y=$year",
+         'marked'   => "?tab=marked&y=$year",
 ];
 
 $tab = Common::fetch_GET('tab', 'pending');
@@ -66,7 +66,7 @@ switch ($tab) {
         $include_page = 'inc_list_pending.php';
 }
 
-$qs = "tab={$tab}&y={$year}";
+$qs = "tab=$tab&y=$year";
 
 $page_url = APP__WWW . '/tutors/assessments/index.php';
 
@@ -94,7 +94,7 @@ $change_onclick = ' onclick="change_academic_year()"';
     chosen_year = year_sbox.options[year_sbox.selectedIndex].value;
 
     if (chosen_year) {
-        window.location.href='<?= $page_url ."?tab={$tab}&y="; ?>' + chosen_year;
+        window.location.href='<?= $page_url ."?tab=$tab&y="; ?>' + chosen_year;
     }
   }
 </script>
@@ -115,7 +115,7 @@ $UI->content_start();
     <?php
       foreach ($tabs as $label => $url) {
           $tab_status = ($label==$tab) ? 'on' : 'off';
-          echo "<td class=\"tab_{$tab_status}\" width=\"100\"><a class=\"tab\" href=\"{$url}\">". ucfirst($label) .'</a></td>';
+          echo "<td class=\"tab_$tab_status\" width=\"100\"><a class=\"tab\" href=\"$url\">". ucfirst($label) .'</a></td>';
       }
     ?>
     <td>&nbsp;</td>

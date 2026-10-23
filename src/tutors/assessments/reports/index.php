@@ -35,8 +35,8 @@ $marking_date = (int) Common::fetch_GET('md');
 
 $command = Common::fetch_POST('command');
 
-$qs = "a={$assessment_id}&md={$marking_date}&tab={$tab}&y={$year}";
-$list_url = "../index.php?tab={$tab}&y={$year}";
+$qs = "a=$assessment_id&md=$marking_date&tab=$tab&y=$year";
+$list_url = "../index.php?tab=$tab&y=$year";
 
 // --------------------------------------------------------------------------------
 
@@ -45,7 +45,7 @@ $do_reports = false;
 $assessment = new Assessment($DB);
 if ($assessment->load($assessment_id)) {
     $do_reports = true;
-    $assessment_qs = "a={$assessment->id}&tab={$tab}&y={$year}";
+    $assessment_qs = "a={$assessment->id}&tab=$tab&y=$year";
 
     $form = new Form($DB);
     $form_xml = $assessment->get_form_xml();

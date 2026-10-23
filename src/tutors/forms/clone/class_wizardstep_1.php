@@ -116,7 +116,7 @@ class WizardStep1
                             <td><input type="radio" name="form_id" id="form_id_<?php echo $form['form_id']; ?>"
                                        value="<?php echo $form['form_id']; ?>"<?php echo $checked_str; ?>/></td>
                             <th style="text-align: left"><label class="small"
-                                                                for="form_id_<?php echo $form['form_id']; ?>"><?php echo "{$form['form_name']}{$title_str}"; ?></label>
+                                                                for="form_id_<?php echo $form['form_id']; ?>"><?php echo "{$form['form_name']}$title_str"; ?></label>
                             </th>
                         </tr>
                         <?php

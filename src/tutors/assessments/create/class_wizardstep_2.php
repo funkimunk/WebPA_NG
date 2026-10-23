@@ -117,8 +117,8 @@ class WizardStep2
                 }
                 echo '<tr>';
                 echo "<td><input type=\"radio\" name=\"form_id\" id=\"form_{$form['form_id']}\" value=\"{$form['form_id']}\" $checked /></td>";
-                echo "<td><label class=\"small\" for=\"form_{$form['form_id']}\">{$form['form_name']}{$module}</label></td>";
-                echo "<td>&nbsp; &nbsp; (<a style=\"font-weight: normal; font-size: 84%;\" href=\"../../forms/edit/preview_form.php?f={$form['form_id']}&amp;i={$intro_text}\" target=\"_blank\">preview</a>)</td>";
+                echo "<td><label class=\"small\" for=\"form_{$form['form_id']}\">{$form['form_name']}$module</label></td>";
+                echo "<td>&nbsp; &nbsp; (<a style=\"font-weight: normal; font-size: 84%;\" href=\"../../forms/edit/preview_form.php?f={$form['form_id']}&amp;i=$intro_text\" target=\"_blank\">preview</a>)</td>";
                 echo '</tr>';
             } ?>
                 </table>

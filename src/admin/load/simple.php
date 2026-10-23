@@ -300,7 +300,7 @@ $UI->content_start();
 ?>
 <div class="content_box">
     <?php if (!empty($user_warning)) {
-    echo "<div class=\"warning_box\">{$user_warning}</div>";
+    echo "<div class=\"warning_box\">$user_warning</div>";
 } ?>
 
     <?php if (!empty($user_msg)) {

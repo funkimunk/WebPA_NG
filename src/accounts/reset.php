@@ -98,7 +98,7 @@ switch ($action) {
 
             $dbConn = $DB->getConnection();
 
-            $userQuery = 'SELECT * FROM ' . APP__DB_TABLE_PREFIX . 'user WHERE user_id = ?';
+            $userQuery = 'SELECT user_id, source_id, username, password, id_number, forename, lastname, email, admin, disabled, date_last_login, last_module_id FROM ' . APP__DB_TABLE_PREFIX . 'user WHERE user_id = ?';
 
             $userRow = $dbConn->fetchAssociative($userQuery, [$uid], [ParameterType::INTEGER]);
 

@@ -12,6 +12,7 @@
 require __DIR__ . '/../../vendor/autoload.php';
 
 use Doctrine\DBAL\ParameterType;
+use WebPA\includes\classes\Cache;
 use WebPA\includes\classes\DAO;
 use WebPA\includes\classes\EngCIS;
 use WebPA\includes\classes\UI;
@@ -207,7 +208,13 @@ $BRANDING['css'] = Common::fetch_SESSION('branding_css', CUSTOM_CSS);
 $BRANDING['email.help'] = Common::fetch_SESSION('branding_email.help', APP__EMAIL_HELP);
 $BRANDING['email.noreply'] = Common::fetch_SESSION('branding_email.noreply', APP__EMAIL_NO_REPLY);
 
+// Initialise CIS
 $CIS = new EngCIS($_source_id, $_module_id);
+
+// Cache academic year (avoid repeated computation)
+if (!Cache::has('academic_year')) {
+    Cache::set('academic_year', \WebPA\includes\functions\AcademicYear::get_academic_year());
+}
 
 // If we found a user to load, load 'em!
 if ($_user_id) {
@@ -220,6 +227,11 @@ if ($_user_id) {
 
     // save session data
     $_SESSION['_user_id'] = $_user->id;
+
+    // Cache user modules for this user (avoid repeated DB queries)
+    if (!Cache::has("user_modules:$_user_id")) {
+        Cache::set("user_modules:$_user_id", $CIS->get_user_modules($_user_id));
+    }
 }
 
 if (!is_null($_user)) {
@@ -231,11 +243,17 @@ $_module = null;
 
 // If we found a module to load, load it!
 if ($_module_id) {
-    $dbConn = $DB->getConnection();
-
-    $query = 'SELECT module_id, module_code, module_title FROM ' . APP__DB_TABLE_PREFIX . 'module WHERE module_id = ?';
-
-    $_module = $dbConn->fetchAssociative($query, [$_SESSION['_module_id']], [ParameterType::INTEGER]);
+    $cache_key = "module:$_module_id";
+    if (Cache::has($cache_key)) {
+        $_module = Cache::get($cache_key);
+    } else {
+        $dbConn = $DB->getConnection();
+        $query = 'SELECT module_id, module_code, module_title FROM ' . APP__DB_TABLE_PREFIX . 'module WHERE module_id = ?';
+        $_module = $dbConn->fetchAssociative($query, [$_SESSION['_module_id']], [ParameterType::INTEGER]);
+        if ($_module) {
+            Cache::set($cache_key, $_module);
+        }
+    }
 
     $_module_code = $_module['module_code'];
 }
