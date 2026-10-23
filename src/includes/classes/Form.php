@@ -131,7 +131,7 @@ class Form
     {
         $this->id = $row['form_id'];
         $this->name = $row['form_name'];
-        $this->type = (is_null($row['form_type'])) ? 'likert' : $row['form_type'];
+        $this->type = ($row['form_type'] === null) ? 'likert' : $row['form_type'];
         $this->_load_xml($row['form_xml']);
 
         return true;

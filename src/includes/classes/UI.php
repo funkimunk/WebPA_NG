@@ -275,7 +275,7 @@ class UI
                     $num_crumbs = count($this->breadcrumbs);
                     foreach ($this->breadcrumbs as $k => $v) {
                         --$num_crumbs;
-                        if (!is_null($v)) {
+                        if ($v !== null) {
                             echo "<a class=\"breadcrumb\" href=\"$v\">$k</a>";
                             if ($num_crumbs > 0) {
                                 echo ' &gt; ';

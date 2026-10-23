@@ -208,7 +208,7 @@ if ($type == 'view') {
                   }
 
                   $q_total[$target_member_id] += (int) $score;
-                  if (is_null($score)) {
+                  if ($score === null) {
                       $score = '-';
                   }
                   echo "<td>$score</td>";
@@ -238,9 +238,9 @@ if ($type == 'view') {
 
 /*
 * --------------------------------------------------------------------------------
-* If report type is download CSV
-* --------------------------------------------------------------------------------
-*/
+ * If report type is download CSV
+ * --------------------------------------------------------------------------------
+ */
 if ($type == 'download-csv') {
     header('Content-Disposition: attachment; filename="webpa_marks_awarded_byquestion.csv"');
     header('Content-Type: text/csv');
@@ -267,7 +267,7 @@ if ($type == 'download-csv') {
                     echo "\"\n";
                 }
 
-                echo '"",';
+                echo '",';
 
                 foreach ($g_members as $i => $member_id) {
                     $char = chr(65+$i);
@@ -302,7 +302,7 @@ if ($type == 'download-csv') {
                             $q_total[$target_member_id] += (int) $score;
                         }
 
-                        if (is_null($score)) {
+                        if ($score === null) {
                             $score = '-';
                         }
 

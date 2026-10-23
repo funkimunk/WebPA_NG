@@ -80,7 +80,7 @@ class Authenticator
         $DAO = $this->get_DAO();
         $this->dbConn = $DAO->getConnection();
 
-        if (!is_null($user)) {
+        if ($user !== null) {
             $is_admin = $user['admin'] == 1;
             $source_id = $user['source_id'];
 
@@ -92,7 +92,7 @@ class Authenticator
 
                     $userModule = $this->dbConn->fetchAssociative($userModuleQuery, [$user['last_module_id'], $user['user_id']], [ParameterType::INTEGER, ParameterType::INTEGER]);
 
-                    if (is_null($userModule)) {
+                    if ($userModule === null) {
                         $this->module_id = null;
                     }
                 } else {
@@ -100,7 +100,7 @@ class Authenticator
 
                     $adminModule = $this->dbConn->fetchAssociative($adminModuleQuery, [$user['last_module_id']], [ParameterType::INTEGER]);
 
-                    if (!is_null($adminModule)) {
+                    if ($adminModule !== null) {
                         $source_id = $adminModule['source_id'];
                     }
                 }
@@ -122,14 +122,14 @@ class Authenticator
 
                 $moduleCode = $this->dbConn->fetchOne($moduleQuery, [$this->module_id], [ParameterType::INTEGER]);
 
-                if (is_null($moduleCode)) {
+                if ($moduleCode === null) {
                     $this->module_id = null;
                 } else {
                     $this->module_code = $moduleCode;
                 }
             }
 
-            if (!is_null($this->module_id)) {
+            if ($this->module_id !== null) {
                 $userTypeQuery = 'SELECT user_type FROM ' . APP__DB_TABLE_PREFIX . 'user_module WHERE module_id = ? AND user_id = ?';
 
                 $userType = $this->dbConn->fetchOne($userTypeQuery, [$this->module_id, $user['user_id']], [ParameterType::INTEGER, ParameterType::INTEGER]);
@@ -224,7 +224,7 @@ class Authenticator
     // Get the DAO object
     public function get_DAO()
     {
-        if (is_null($this->_DAO)) {
+        if ($this->_DAO === null) {
             $this->_DAO = new DAO(APP__DB_HOST, APP__DB_USERNAME, APP__DB_PASSWORD, APP__DB_DATABASE, APP__DB_PORT);
         }
 

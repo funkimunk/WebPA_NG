@@ -44,12 +44,12 @@ class WizardStep1
 
         $open_date = $this->wizard->get_field('open_date');
 
-        if (is_null($open_date)) {
+        if ($open_date === null) {
             $open_date = mktime(9, 0, 0);
         }  // default start time, today @ 9am
 
         $close_date = $this->wizard->get_field('close_date');
-        if (is_null($close_date)) {
+        if ($close_date === null) {
             $close_date = mktime(17, 0, 0, date('m', $today), date('d', $today)+13, date('Y', $today));
         } // default start time, two-weeks today @ 5pm
 

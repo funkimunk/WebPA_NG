@@ -68,13 +68,13 @@ if (($command) && ($assessment)) {
       // Create Mark Sheet
       $weighting = Common::fetch_POST('pa_weighting', null);
       $weighting = (is_numeric($weighting)) ? (int) $weighting : null;
-      if ((is_null($weighting)) || ($weighting<=0) || ($weighting>100)) {
+      if (($weighting === null) || ($weighting<=0) || ($weighting>100)) {
           $errors[] = 'The PA Weighting must be a number between 1 - 100';
       }
 
       $penalty = Common::fetch_POST('pa_penalty', null);
       $penalty = (is_numeric($penalty)) ? (int) $penalty : null;
-      if ((is_null($penalty)) || ($penalty<$min_penalty) || ($penalty>$max_penalty)) {
+      if (($penalty === null) || ($penalty<$min_penalty) || ($penalty>$max_penalty)) {
           $errors[] = "The Non-completion Penalty must be a number between $min_penalty - $max_penalty";
       }
 

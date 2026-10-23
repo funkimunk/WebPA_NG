@@ -71,7 +71,7 @@ class Email
      */
     public function set_cc($cc)
     {
-        if (is_null($cc)) {
+        if ($cc === null) {
             unset($this->_headers['Cc']);
         } else {
             if (!is_array($cc)) {
@@ -91,7 +91,7 @@ class Email
      */
     public function set_bcc($bcc)
     {
-        if (is_null($bcc)) {
+        if ($bcc === null) {
             unset($this->_headers['Bcc']);
         } else {
             if (!is_array($bcc)) {

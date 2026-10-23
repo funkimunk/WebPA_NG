@@ -233,7 +233,7 @@ class Wizard
      */
     public function title()
     {
-        if (!is_null($this->_override_num_steps)) {
+        if ($this->_override_num_steps !== null) {
             if ($this->_current_step<=$this->_override_num_steps) {
                 echo "<p>You are on <strong>step {$this->_current_step}</strong> of <strong>{$this->_override_num_steps}</strong> in the {$this->name}.</p>";
             }

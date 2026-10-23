@@ -177,7 +177,7 @@ if ($type == 'view') {
                 }
 
                 $q_total[$target_member_id] += (int) $score;
-                if (is_null($score)) {
+                if ($score === null) {
                     $score = '-';
                 }
                 echo "<td>$score</td>";
@@ -235,12 +235,12 @@ if ($type == 'download-csv') {
             echo "\"Q$q_index : {$question['text']['_data']}";
 
             if (array_key_exists('range', $question)) {
-                echo "(range: {$question['range']['_data']})\"\n";
+                echo "range: {$question['range']['_data']})\"\n";
             } else {
                 echo "\"\n";
             }
 
-            echo '"",';
+            echo '",';
 
             foreach ($g_members as $i => $member_id) {
                 $individ = $CIS->get_user($member_id);
@@ -267,7 +267,7 @@ if ($type == 'download-csv') {
                 } else {
                     echo $individ['username'];
                 }
-                echo ')",';
+                echo '"),';
 
                 foreach ($g_members as $j => $target_member_id) {
                     if ($assessment->assessment_type == '0') {
@@ -281,7 +281,7 @@ if ($type == 'download-csv') {
                     }
 
                     $q_total[$target_member_id] += (int) $score;
-                    if (is_null($score)) {
+                    if ($score === null) {
                         $score = '-';
                     }
 

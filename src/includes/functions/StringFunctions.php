@@ -26,7 +26,7 @@ class StringFunctions
     */
     public static function str_random($length = 8, $valid_chars = null)
     {
-        if (is_null($valid_chars)) {
+        if ($valid_chars === null) {
             $valid_chars = STR_ALPHANUM_CHARS;
         }
 

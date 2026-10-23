@@ -128,7 +128,7 @@ if ($assessment) {
                     } else {
                         $score_array[$group_names[$group_id]][$mark_recipient][$q_text][$marker] = $algorithm->get_member_response($group_id, $target_member_id, $question_id, $member_id);
                     }
-                    if (is_null($score_array[$group_names[$group_id]][$mark_recipient][$q_text][$marker])) {
+                    if ($score_array[$group_names[$group_id]][$mark_recipient][$q_text][$marker] === null) {
                         $score_array[$group_names[$group_id]][$mark_recipient][$q_text][$marker] = '-';
                     }
                 }

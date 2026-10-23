@@ -396,9 +396,9 @@ class EngCIS
      */
     public function get_user_for_username($username, $source_id = null)
     {
-        if (is_null($source_id) && isset($_SESSION['_source_id'])) {
+        if ($source_id === null && isset($_SESSION['_source_id'])) {
             $source_id = $_SESSION['_source_id'];
-        } elseif (is_null($source_id)) {
+        } elseif ($source_id === null) {
             $source_id = '';
         }
         $this->moduleId = Common::fetch_SESSION('_module_id', null);
@@ -426,9 +426,9 @@ class EngCIS
      */
     public function get_user_modules($user_id, $username = null, $ordering = 'id', $source_id = null)
     {
-        if (is_null($source_id) && isset($_SESSION['_source_id'])) {
+        if ($source_id === null && isset($_SESSION['_source_id'])) {
             $source_id = $_SESSION['_source_id'];
-        } elseif (is_null($source_id)) {
+        } elseif ($source_id === null) {
             $source_id = '';
         }
 

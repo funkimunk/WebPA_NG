@@ -126,7 +126,7 @@ class WizardStep2
         $errors = null;
 
         $this->wizard->set_field('num_groups', Common::fetch_POST('num_groups', null));
-        if (is_null($this->wizard->get_field('num_groups'))) {
+        if ($this->wizard->get_field('num_groups') === null) {
             $errors[] = 'You must choose how many groups to create';
         }
 

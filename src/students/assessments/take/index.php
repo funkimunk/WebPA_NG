@@ -194,7 +194,7 @@ if (($command) && ($assessment)) {
                           $q_id = "q_$q_$id";
                           $score = Common::fetch_POST($q_id, null);
 
-                          if (is_null($score)) {
+                          if ($score === null) {
                               $errors[] = "You didn't give a " . APP__MARK_TEXT . " for '$name' in Q$q_num.";
                               $error_style_ids["$q_id"] = 1;
                           } else {
@@ -218,7 +218,7 @@ if (($command) && ($assessment)) {
                       foreach ($people as $id => $name) {
                           $justification_fetch = strip_tags(Common::fetch_POST($id));
 
-                          if (!is_null($justification_fetch)) {
+                          if ($justification_fetch !== null) {
                               $justification[] = ['assessment_id'    =>  $assessment->id,
                                    'group_id'       =>  $group->id,
                                    'user_id'        =>  $_user->id,

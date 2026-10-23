@@ -495,7 +495,7 @@ abstract class Algorithm
     protected function _applyPenalties()
     {
         if ($this->_grades) {
-            if (is_null($this->_actual_submitters)) {
+            if ($this->_actual_submitters === null) {
                 $this->_actual_submitters = [];
             }
 

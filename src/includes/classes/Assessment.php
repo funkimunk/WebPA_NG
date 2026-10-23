@@ -542,7 +542,7 @@ class Assessment
     */
     public function is_locked()
     {
-        if (is_null($this->_locked)) {
+        if ($this->_locked === null) {
             $countAssessmentsQuery =
           'SELECT COUNT(assessment_id) ' .
           'FROM ' . APP__DB_TABLE_PREFIX . 'user_mark ' .

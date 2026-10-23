@@ -124,7 +124,7 @@ class GroupCollection
         $this->module_id = $row['module_id'];
         $this->name = $row['collection_name'];
         $this->_created_on = strtotime($row['collection_created_on']);
-        $this->_locked_on = ((is_null($row['collection_locked_on'])) ? null : strtotime($row['collection_locked_on']));
+        $this->_locked_on = (($row['collection_locked_on'] === null) ? null : strtotime($row['collection_locked_on']));
         $this->_assessment_id = $row['collection_assessment_id'] ?? null;
         return true;
     }
@@ -225,7 +225,7 @@ class GroupCollection
                     ->setParameter(3, $this->id);
 
             // check if the locked field needs to be set
-            if (is_null($lockedOn)) {
+            if ($lockedOn === null) {
                 $queryBuilder->set('collection_locked_on', 'NULL');
             } else {
                 $queryBuilder->set('collection_locked_on', '?')->setParameter(3, $lockedOn);
@@ -284,7 +284,7 @@ class GroupCollection
      */
     public function is_locked()
     {
-        return (!is_null($this->_locked_on)) || ($this->_locked_on);
+        return ($this->_locked_on !== null) || ($this->_locked_on);
     }
 
     // /->is_locked()

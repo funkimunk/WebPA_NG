@@ -234,7 +234,7 @@ if ($_user_id) {
     }
 }
 
-if (!is_null($_user)) {
+if ($_user !== null) {
     $CIS->setUser($_user);
 }
 
