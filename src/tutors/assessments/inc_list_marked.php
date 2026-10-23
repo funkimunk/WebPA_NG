@@ -42,12 +42,10 @@ use WebPA\includes\classes\XMLParser;
 $now = date(MYSQL_DATETIME_FORMAT);
 
 $assessmentsQuery =
-    'SELECT DISTINCT a.*, pd.publish_date AS comments_publish_date ' .
+    'SELECT DISTINCT a.*, NULL AS comments_publish_date ' .
     'FROM ' . APP__DB_TABLE_PREFIX . 'assessment a ' .
     'LEFT JOIN ' . APP__DB_TABLE_PREFIX . 'assessment_marking am ' .
     'ON a.assessment_id = am.assessment_id ' .
-    'LEFT JOIN ' . APP__DB_TABLE_PREFIX . 'user_justification_publish_date pd ' .
-    'ON a.assessment_id = pd.assessment_id ' .
     'WHERE a.module_id = ? ' .
     'AND a.open_date >= ? ' .
     'AND a.open_date < ? ' .

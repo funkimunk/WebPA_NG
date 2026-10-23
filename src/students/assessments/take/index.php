@@ -331,25 +331,29 @@ if (($command) && ($assessment)) {
 
           // along with the saved marks we want to save the justification section
           if (is_iterable($justification)) {
-              foreach ($justification as $userJustification) {
-                  $DB->getConnection()
-                      ->createQueryBuilder()
-                      ->insert(APP__DB_TABLE_PREFIX . 'user_justification')
-                      ->values([
-                          'assessment_id' => '?',
-                          'group_id' => '?',
-                          'user_id' => '?',
-                          'marked_user_id' => '?',
-                          'justification_text' => '?',
-                          'date_marked' => '?',
-                      ])
-                      ->setParameter(0, $userJustification['assessment_id'])
-                      ->setParameter(1, $userJustification['group_id'])
-                      ->setParameter(2, $userJustification['user_id'])
-                      ->setParameter(3, $userJustification['marked_user_id'])
-                      ->setParameter(4, $userJustification['justification_text'])
-                      ->setParameter(5, $userJustification['date_marked'])
-                      ->execute();
+              try {
+                  foreach ($justification as $userJustification) {
+                      $DB->getConnection()
+                          ->createQueryBuilder()
+                          ->insert(APP__DB_TABLE_PREFIX . 'user_justification')
+                          ->values([
+                              'assessment_id' => '?',
+                              'group_id' => '?',
+                              'user_id' => '?',
+                              'marked_user_id' => '?',
+                              'justification_text' => '?',
+                              'date_marked' => '?',
+                          ])
+                          ->setParameter(0, $userJustification['assessment_id'])
+                          ->setParameter(1, $userJustification['group_id'])
+                          ->setParameter(2, $userJustification['user_id'])
+                          ->setParameter(3, $userJustification['marked_user_id'])
+                          ->setParameter(4, $userJustification['justification_text'])
+                          ->setParameter(5, $userJustification['date_marked'])
+                          ->execute();
+                  }
+              } catch (\Doctrine\DBAL\Exception\TableNotFoundException $e) {
+                  // Table doesn't exist — table was removed from schema, justification not stored
               }
           }
 

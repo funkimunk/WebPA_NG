@@ -50,11 +50,15 @@ if (!empty($user_id)) {
         [ParameterType::INTEGER, ParameterType::STRING]
     );
 
-    $dbConn->executeQuery(
-        'DELETE FROM ' . APP__DB_TABLE_PREFIX . 'user_justification WHERE user_id = ? AND assessment_id = ?',
-        [$user_id, $assessment_id],
-        [ParameterType::INTEGER, ParameterType::STRING]
-    );
+    try {
+        $dbConn->executeQuery(
+            'DELETE FROM ' . APP__DB_TABLE_PREFIX . 'user_justification WHERE user_id = ? AND assessment_id = ?',
+            [$user_id, $assessment_id],
+            [ParameterType::INTEGER, ParameterType::STRING]
+        );
+    } catch (\Doctrine\DBAL\Exception\TableNotFoundException $e) {
+        // Table doesn't exist — table was removed from schema
+    }
 
     $dbConn->executeQuery(
         'DELETE FROM ' . APP__DB_TABLE_PREFIX . 'user_response WHERE user_id = ? AND assessment_id = ?',

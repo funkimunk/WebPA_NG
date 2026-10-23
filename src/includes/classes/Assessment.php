@@ -135,11 +135,15 @@ class Assessment
             [ParameterType::STRING]
         );
 
-        $this->dbConn->executeQuery(
-            'DELETE FROM ' . APP__DB_TABLE_PREFIX . 'user_justification WHERE assessment_id = ?',
-            [$this->id],
-            [ParameterType::STRING]
-        );
+        try {
+            $this->dbConn->executeQuery(
+                'DELETE FROM ' . APP__DB_TABLE_PREFIX . 'user_justification WHERE assessment_id = ?',
+                [$this->id],
+                [ParameterType::STRING]
+            );
+        } catch (\Doctrine\DBAL\Exception\TableNotFoundException $e) {
+            // Table doesn't exist — table was removed from schema
+        }
 
         $this->dbConn->executeQuery(
             'DELETE FROM ' . APP__DB_TABLE_PREFIX . 'user_response WHERE assessment_id = ?',
