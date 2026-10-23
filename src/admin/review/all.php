@@ -127,7 +127,7 @@ if (!isset($stmt)) {
                     echo 'No';
                 }
                 echo '</td>';
-            } elseif (strlen($field_value) <= 0) {
+            } elseif (strlen((string) $field_value) <= 0) {
                 echo '<td class="obj_info_text">&nbsp;</td>';
             } elseif (($field_name == 'id') && $style) {
                 echo "<td class=\"obj_info_text\"><span title=\"$source_id\">$field_value</span></td>";
