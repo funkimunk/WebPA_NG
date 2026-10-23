@@ -382,7 +382,7 @@ class EngCIS
      */
     public function get_user_for_email($email)
     {
-        $query = 'SELECT * FROM ' . APP__DB_TABLE_PREFIX . 'user WHERE email = ? LIMIT 1';
+        $query = 'SELECT user_id, source_id, username, password, id_number, forename, lastname, email, admin, disabled, date_last_login, last_module_id FROM ' . APP__DB_TABLE_PREFIX . 'user WHERE email = ? LIMIT 1';
 
         return $this->dbConn->fetchAssociative($query, [$email], [ParameterType::STRING]);
     }
@@ -403,9 +403,9 @@ class EngCIS
         }
         $this->moduleId = Common::fetch_SESSION('_module_id', null);
 
-        $query = 'SELECT u.*, um.user_type FROM ' . APP__DB_TABLE_PREFIX . 'user u '
+        $query = 'SELECT u.user_id, u.source_id, u.username, u.password, u.id_number, u.forename, u.lastname, u.email, u.admin, u.disabled, u.date_last_login, u.last_module_id, um.user_type FROM ' . APP__DB_TABLE_PREFIX . 'user u '
                . 'LEFT OUTER JOIN ( '
-               . 'SELECT * FROM ' . APP__DB_TABLE_PREFIX . 'user_module WHERE module_id = ? '
+               . 'SELECT user_id, user_type FROM ' . APP__DB_TABLE_PREFIX . 'user_module WHERE module_id = ? '
                . ') um '
                . 'ON u.user_id = um.user_id '
                . 'WHERE username = ? '

@@ -113,7 +113,7 @@ class Form
     {
         $dbConn = $this->_DAO->getConnection();
 
-        $query = 'SELECT * FROM ' . APP__DB_TABLE_PREFIX . 'form  WHERE form_id = ?';
+        $query = 'SELECT form_id, form_name, form_type, form_xml FROM ' . APP__DB_TABLE_PREFIX . 'form  WHERE form_id = ?';
 
         $form = $dbConn->fetchAssociative($query, [$id], [ParameterType::STRING]);
 
