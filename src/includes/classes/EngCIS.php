@@ -11,6 +11,7 @@
 namespace WebPA\includes\classes;
 
 use Doctrine\DBAL\ParameterType;
+use WebPA\includes\classes\Cache;
 use WebPA\includes\functions\AcademicYear;
 use WebPA\includes\functions\ArrayFunctions;
 use WebPA\includes\functions\Common;
@@ -425,14 +426,20 @@ class EngCIS
      */
     public function get_user_modules($user_id, $username = null, $ordering = 'id', $source_id = null)
     {
-        $dbConn = $this->_DAO->getConnection();
-        $queryBuilder = $dbConn->createQueryBuilder();
-
         if (is_null($source_id) && isset($_SESSION['_source_id'])) {
             $source_id = $_SESSION['_source_id'];
         } elseif (is_null($source_id)) {
             $source_id = '';
         }
+
+        // Build cache key from inputs
+        $cache_key = 'user_modules:' . md5((is_array($user_id) ? implode(',', $user_id) : ($user_id ?? '')) . ':' . ($username ?? 'admin') . ':' . $source_id);
+        if (Cache::has($cache_key)) {
+            return Cache::get($cache_key);
+        }
+
+        $dbConn = $this->_DAO->getConnection();
+        $queryBuilder = $dbConn->createQueryBuilder();
 
         $queryBuilder->orderBy($ordering === 'name' ? 'lcm.module_title' : 'lcm.module_id');
 
@@ -482,7 +489,9 @@ class EngCIS
             $queryBuilder->setParameter(0, $source_id);
         }
 
-        return $queryBuilder->execute()->fetchAllAssociativeIndexed();
+        $result = $queryBuilder->execute()->fetchAllAssociativeIndexed();
+        Cache::set($cache_key, $result);
+        return $result;
     }
 
     /*
