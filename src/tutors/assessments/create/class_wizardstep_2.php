@@ -72,11 +72,9 @@ class WizardStep2
             'FROM ' . APP__DB_TABLE_PREFIX . 'form f ' .
             'INNER JOIN ' . APP__DB_TABLE_PREFIX . 'form_module fm ' .
             'ON f.form_id = fm.form_id ' .
-            'INNER JOIN ' . APP__DB_TABLE_PREFIX . 'user_module um ' .
-            'ON fm.module_id = um.module_id ' .
             'INNER JOIN ' . APP__DB_TABLE_PREFIX . 'module m ' .
-            'ON um.module_id = m.module_id ' .
-            'WHERE um.user_id = ? ' .
+            'ON fm.module_id = m.module_id ' .
+            'WHERE fm.module_id IN (SELECT um.module_id FROM ' . APP__DB_TABLE_PREFIX . 'user_module um WHERE um.user_id = ?) ' .
             'OR fm.module_id = ? ' .
             'ORDER BY f.form_name ASC';
 

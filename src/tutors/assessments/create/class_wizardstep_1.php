@@ -208,15 +208,15 @@ class WizardStep1
 
         // open_date
         $time_parts = explode(':', Common::fetch_POST('open_date_time'));
-        $time_h = $time_parts[0];
-        $time_m = $time_parts[1];
-        $open_date = mktime($time_h, $time_m, 0, Common::fetch_POST('open_date_month'), Common::fetch_POST('open_date_day'), Common::fetch_POST('open_date_year'));
+        $time_h = (int) ($time_parts[0] ?? '0');
+        $time_m = (int) ($time_parts[1] ?? '0');
+        $open_date = mktime($time_h, $time_m, 0, (int) Common::fetch_POST('open_date_month'), (int) Common::fetch_POST('open_date_day'), (int) Common::fetch_POST('open_date_year'));
 
         // close_date
         $time_parts = explode(':', Common::fetch_POST('close_date_time'));
-        $time_h = $time_parts[0];
-        $time_m = $time_parts[1];
-        $close_date = mktime($time_h, $time_m, 0, Common::fetch_POST('close_date_month'), Common::fetch_POST('close_date_day'), Common::fetch_POST('close_date_year'));
+        $time_h = (int) ($time_parts[0] ?? '0');
+        $time_m = (int) ($time_parts[1] ?? '0');
+        $close_date = mktime($time_h, $time_m, 0, (int) Common::fetch_POST('close_date_month'), (int) Common::fetch_POST('close_date_day'), (int) Common::fetch_POST('close_date_year'));
 
 
         $this->wizard->set_field('open_date', $open_date);
