@@ -667,7 +667,7 @@ class GroupCollection
         $groups_iterator = $this->get_groups_iterator();
         if ($groups_iterator->size() > 0) {
             for ($groups_iterator->reset(); $groups_iterator->is_valid(); $groups_iterator->next()) {
-                $group =& $groups_iterator->current();
+                $group = $groups_iterator->current();
                 $group->purge_members($target_roles, $protect_roles);
             }
         }

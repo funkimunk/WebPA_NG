@@ -102,7 +102,7 @@ if (!$assessments) {
         $assessment_iterator = new SimpleObjectIterator($assessments, 'Assessment', $DB);
 
         for ($assessment_iterator->reset(); $assessment_iterator->is_valid(); $assessment_iterator->next()) {
-            $assessment =& $assessment_iterator->current();
+            $assessment = $assessment_iterator->current();
             $assessment->set_db($DB);
 
             $commentPublicationDate = $commentsPublicationDateMap[$assessment->id];

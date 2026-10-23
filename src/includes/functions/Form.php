@@ -117,7 +117,7 @@ class Form
             $id = $input_name .'_'. str_replace(' ', '_', $value);
             $checked_str = (in_array($value, $selected_arr)) ? 'checked="checked"' : '';
 
-            echo "<td><input type=\"checkbox\" name=\"$input_name[]\" id=\"$id\" value=\"$value\" $checked_str /></td>";
+            echo "<td><input type=\"checkbox\" name=\"{$input_name}[]\" id=\"$id\" value=\"$value\" $checked_str /></td>";
             echo "<th><label for=\"$id\">$label</label></th>";
             $i++;
         }

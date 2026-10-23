@@ -262,7 +262,7 @@ if (!$assessment) {
       </tr>
 <?php
     for ($groups->reset(); $groups->is_valid(); $groups->next()) {
-        $group =& $groups->current();
+        $group = $groups->current();
         $group_members = $group->get_members();
         $members = ($group_members) ? $CIS->get_user(array_keys($group_members)) : null;
 

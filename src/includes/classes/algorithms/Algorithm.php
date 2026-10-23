@@ -328,7 +328,7 @@ abstract class Algorithm
         $groups_iterator = $collection->get_groups_iterator();
         if ($groups_iterator->size()>0) {
             for ($groups_iterator->reset(); $groups_iterator->is_valid(); $groups_iterator->next()) {
-                $group =& $groups_iterator->current();
+                $group = $groups_iterator->current();
                 $this->_group_names["{$group->id}"] = $group->name;
                 $this->_group_members["{$group->id}"] = $group->get_member_ids();
             }

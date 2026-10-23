@@ -62,7 +62,7 @@ if ($allow_edit) {
       $groups_to_delete = Common::fetch_POST('group');
       if (is_array($groups_to_delete)) {
           foreach ($groups_to_delete as $i => $group_id) {
-              $group =& $collection->get_group_object($group_id);
+              $group = $collection->get_group_object($group_id);
               $group->delete();
               unset($group);
           }

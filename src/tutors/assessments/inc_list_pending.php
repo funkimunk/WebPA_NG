@@ -74,7 +74,7 @@ if (!$assessments) {
         $assessment_iterator = new SimpleObjectIterator($assessments, 'Assessment', $DB);
 
         for ($assessment_iterator->reset(); $assessment_iterator->is_valid(); $assessment_iterator->next()) {
-            $assessment =& $assessment_iterator->current();
+            $assessment = $assessment_iterator->current();
 
             $num_responses = (array_key_exists($assessment->id, $responses)) ? $responses[$assessment->id] : 0 ;
             $num_members =  (array_key_exists($assessment->id, $members)) ? $members[$assessment->id] : 0 ;

@@ -32,26 +32,28 @@ $collections = $group_handler->get_member_collections($_user->id, 'assessment');
 
 $collection_ids = ArrayFunctions::array_extract_column($collections, 'collection_id');
 
+$assessments = [];
+
 // Get a list of assessments that match the user's collections (for this year)
+if ($collection_ids) {
+    $academic_year = AcademicYear::get_academic_year();
 
-$academic_year = AcademicYear::get_academic_year();
+    $start_date = mktime(0, 0, 0, APP__ACADEMIC_YEAR_START_MONTH, 1, $academic_year - 1);
+    $end_date = mktime(0, 0, 0, APP__ACADEMIC_YEAR_START_MONTH, 1, $academic_year + 1);
 
-$start_date = mktime(0, 0, 0, APP__ACADEMIC_YEAR_START_MONTH, 1, $academic_year - 1);
-$end_date = mktime(0, 0, 0, APP__ACADEMIC_YEAR_START_MONTH, 1, $academic_year + 1);
+    $sql_start_date = date(MYSQL_DATETIME_FORMAT, $start_date);
+    $sql_end_date = date(MYSQL_DATETIME_FORMAT, $end_date);
 
-$sql_start_date = date(MYSQL_DATETIME_FORMAT, $start_date);
-$sql_end_date = date(MYSQL_DATETIME_FORMAT, $end_date);
+    $assessmentsQuery =
+        'SELECT a.* FROM ' .
+        APP__DB_TABLE_PREFIX . 'assessment a ' .
+        'WHERE a.module_id = ? ' .
+        'AND a.collection_id IN (?) ' .
+        'AND a.open_date >= ? ' .
+        'AND a.open_date < ? ' .
+        'ORDER BY a.open_date, a.close_date, a.assessment_name';
 
-$assessmentsQuery =
-    'SELECT a.* FROM ' .
-    APP__DB_TABLE_PREFIX . 'assessment a ' .
-    'WHERE a.module_id = ? ' .
-    'AND a.collection_id IN (?) ' .
-    'AND a.open_date >= ? ' .
-    'AND a.open_date < ? ' .
-    'ORDER BY a.open_date, a.close_date, a.assessment_name';
-
-$assessments = $DB->getConnection()->fetchAllAssociative(
+    $assessments = $DB->getConnection()->fetchAllAssociative(
         $assessmentsQuery,
         [
             $_module_id,
@@ -65,20 +67,29 @@ $assessments = $DB->getConnection()->fetchAllAssociative(
             ParameterType::STRING,
             ParameterType::STRING,
         ]
-);
+    );
+}
 
 // Get a list of those assessments that the user has already taken
 
 $assessment_ids = array_column($assessments, 'assessment_id');
 
-$assessmentsWithResponseQuery =
-    'SELECT DISTINCT assessment_id ' .
-    'FROM ' . APP__DB_TABLE_PREFIX . 'user_mark ' .
-    'WHERE assessment_id IN (?) ' .
-    'AND user_id = ? ' .
-    'ORDER BY assessment_id';
+$assessments_with_response = [];
 
-$assessments_with_response = $DB->getConnection()->fetchFirstColumn($assessmentsWithResponseQuery, [$assessment_ids, $_user->id], [$DB->getConnection()::PARAM_STR_ARRAY, ParameterType::INTEGER]);
+if ($assessment_ids) {
+    $assessmentsWithResponseQuery =
+        'SELECT DISTINCT assessment_id ' .
+        'FROM ' . APP__DB_TABLE_PREFIX . 'user_mark ' .
+        'WHERE assessment_id IN (?) ' .
+        'AND user_id = ? ' .
+        'ORDER BY assessment_id';
+
+    $assessments_with_response = $DB->getConnection()->fetchFirstColumn(
+        $assessmentsWithResponseQuery,
+        [$assessment_ids, $_user->id],
+        [$DB->getConnection()::PARAM_STR_ARRAY, ParameterType::INTEGER]
+    );
+}
 
 // Split the assessments into pending, open and finished
 $pending_assessments = null;
@@ -145,7 +156,7 @@ if ((!$open_assessments) && (!$pending_assessments) && (!$finished_assessments))
 
         $assessment_iterator = new SimpleObjectIterator($open_assessments, 'Assessment', $DB);
         for ($assessment_iterator->reset(); $assessment_iterator->is_valid(); $assessment_iterator->next()) {
-            $assessment =& $assessment_iterator->current();
+            $assessment = $assessment_iterator->current();
             $take_url = "take/index.php?a={$assessment->id}";
 
             echo '<div class="assessment_open">';
@@ -179,7 +190,7 @@ if ((!$open_assessments) && (!$pending_assessments) && (!$finished_assessments))
 
         $assessment_iterator = new SimpleObjectIterator($pending_assessments, 'Assessment', $DB);
         for ($assessment_iterator->reset(); $assessment_iterator->is_valid(); $assessment_iterator->next()) {
-            $assessment =& $assessment_iterator->current();
+            $assessment = $assessment_iterator->current();
             $take_url = "take/index.php?a={$assessment->id}";
 
             echo '<div class="assessment">';
@@ -214,7 +225,7 @@ if ((!$open_assessments) && (!$pending_assessments) && (!$finished_assessments))
 
         $assessment_iterator = new SimpleObjectIterator($finished_assessments, 'Assessment', $DB);
         for ($assessment_iterator->reset(); $assessment_iterator->is_valid(); $assessment_iterator->next()) {
-            $assessment =& $assessment_iterator->current();
+            $assessment = $assessment_iterator->current();
             $take_url = "take/index.php?a={$assessment->id}";
 
             $completed_msg = ((is_array($assessments_with_response)) && (in_array($assessment->id, $assessments_with_response))) ? 'COMPLETED': 'DID NOT<br />SUBMIT';

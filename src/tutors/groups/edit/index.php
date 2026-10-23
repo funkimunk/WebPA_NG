@@ -30,7 +30,8 @@ $collections = $group_handler->get_user_collections($_user->id);
 // --------------------------------------------------------------------------------
 // Begin Page
 
-$UI->page_title = APP__NAME. ' ' . Generic::EDIT__GROUP;
+$page_title = Generic::EDIT__GROUP;
+$UI->page_title = APP__NAME. ' ' . $page_title;
 $UI->menu_selected = Generic::MY__GROUPS;
 $UI->help_link = '?q=node/253';
 $UI->breadcrumbs = [

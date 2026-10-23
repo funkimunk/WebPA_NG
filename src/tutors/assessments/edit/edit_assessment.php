@@ -542,7 +542,7 @@ if (!$assessment) {
         <?php
         $collection_total_members = 0;
             for ($groups->reset(); $groups->is_valid(); $groups->next()) {
-                $group =& $groups->current();
+                $group = $groups->current();
                 $num_responses = $result_handler->get_responses_count($group->id);
                 $num_responses = $num_responses ?: '-';
 

@@ -78,7 +78,7 @@ if (!$collections) {
     <p>You belong to the following groups.</p>
 <?php
   for ($collection_iterator->reset(); $collection_iterator->is_valid(); $collection_iterator->next()) {
-      $collection =& $collection_iterator->current();
+      $collection = $collection_iterator->current();
       $groups = $collection->get_member_groups($_user->id);
 
 

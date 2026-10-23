@@ -109,6 +109,7 @@ if ($assessment->load($assessment_id)) {
     $assessment = null;
     $question_count = 0;
     $groups_count = 0;
+    $marking_params = null;
 }
 
 // --------------------------------------------------------------------------------
@@ -124,7 +125,7 @@ $UI->breadcrumbs = [
   $page_title       => null,
 ];
 $UI->help_link = '?q=node/235';
-$UI->set_page_bar_button('List Assessments', '../../../../images/buttons//button_assessment_list.gif', '../');
+$UI->set_page_bar_button('List Assessments', '../../../../images/buttons/button_assessment_list.gif', '../');
 $UI->set_page_bar_button('Create Assessments', '../../../../images/buttons/button_assessment_create.gif', '../../create/');
 
 $UI->head();

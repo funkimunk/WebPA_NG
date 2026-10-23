@@ -208,7 +208,7 @@ class Wizard
                     // if there are errors, we won't be showing the next page, we'll go back to the last one!
                     if (is_array($this->_errors)) {
                         $this->_current_step = $this->_last_wizstep->step;
-                        $this->_current_wizstep =& $this->_last_wizstep;
+                        $this->_current_wizstep = $this->_last_wizstep;
                     }
                 }
             }// /if checking last page

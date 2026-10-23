@@ -170,7 +170,7 @@ if (!$collection) {
 <?php
   $num_module_students = $CIS->get_module_students_count($_module_id);
         // Group Information
-        $groups_iterator =& $collection->get_groups_iterator();
+        $groups_iterator = $collection->get_groups_iterator();
         $num_groups = $groups_iterator->size();
         $num_groups_units = ($num_groups==1) ? 'group' : 'groups';
 

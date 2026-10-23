@@ -39,7 +39,7 @@ $collection = $group_handler->get_collection($collection_id);
 $allow_edit = false;
 
 if ($collection) {
-    $group =& $collection->get_group_object($group_id);
+    $group = $collection->get_group_object($group_id);
 
     // Check if the user can edit this group
     $allow_edit = !$collection->is_locked();

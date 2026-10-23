@@ -41,7 +41,7 @@ if ($assessment->load($assessment_id)) {
     $assessment_url = "edit_assessment.php?$assessment_qs";
 
     $form = new Form($DB);
-    $form_xml =& $assessment->get_form_xml();
+    $form_xml = $assessment->get_form_xml();
     $form->load_from_xml($form_xml);
 } else {
     $assessment = null;

@@ -49,9 +49,9 @@ class WizardStep2
 
     public function form()
     {
-        $config =& $this->wizard->get_var('config');
-        $DB =& $this->wizard->get_var('db');
-        $user =& $this->wizard->get_var('user');
+        $config = $this->wizard->get_var('config');
+        $DB = $this->wizard->get_var('db');
+        $user = $this->wizard->get_var('user');
 
         $errors = null;
 

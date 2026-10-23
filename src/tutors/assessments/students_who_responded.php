@@ -93,7 +93,7 @@ $UI->content_start();
 <?php
 if ($groups_iterator->size()>0) {
     for ($groups_iterator->reset(); $groups_iterator->is_valid(); $groups_iterator->next()) {
-        $group =& $groups_iterator->current();
+        $group = $groups_iterator->current();
 
         $members = $CIS->get_user($group->get_member_ids());
         echo "<h2>{$group->name}</h2>";

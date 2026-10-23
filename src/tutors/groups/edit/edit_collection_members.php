@@ -56,7 +56,7 @@ if ($allow_edit) {
       // Add the members who should be in a group
       foreach ($_POST as $k => $v) {
           if ((strpos($k, 'student_')!==false) && (strlen($v)==36)) {
-              $group =& $collection->get_group_object($v);
+              $group = $collection->get_group_object($v);
               $group->add_member(str_replace('student_', '', $k), 'member');
           }
       }

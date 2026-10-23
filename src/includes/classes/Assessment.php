@@ -357,7 +357,7 @@ class Assessment
     {
         // Get the number of questions used in this assessment, and create an array of that size
         $form = new Form($this->get_db());
-        $form_xml =& $this->_form_xml;
+        $form_xml = $this->_form_xml;
         $form->load_from_xml($form_xml);
 
         return $form;

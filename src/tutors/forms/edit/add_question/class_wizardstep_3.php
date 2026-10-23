@@ -50,10 +50,10 @@ class WizardStep3
 
     public function form()
     {
-        $config =& $this->wizard->get_var('config');
-        $DB =& $this->wizard->get_var('db');
-        $user =& $this->wizard->get_var('user');
-        $form =& $this->wizard->get_var('form');
+        $config = $this->wizard->get_var('config');
+        $DB = $this->wizard->get_var('db');
+        $user = $this->wizard->get_var('user');
+        $form = $this->wizard->get_var('form');
 
         $range_start = $this->wizard->get_field('question_range_start');
         $range_end = $this->wizard->get_field('question_range_end');
