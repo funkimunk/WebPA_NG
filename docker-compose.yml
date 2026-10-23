@@ -41,7 +41,7 @@ services:
     networks:
       - webpa
     command: >
-      sh -c "if [ ! -d /var/www/webpa/vendor ]; then composer install --no-dev --optimize-autoloader; fi && php-fpm"
+      sh -c "if [ ! -f /var/www/webpa/vendor/autoload.php ]; then composer install --no-dev --optimize-autoloader; fi && php-fpm"
 
   nginx:
     image: nginx:alpine
