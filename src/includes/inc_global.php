@@ -32,7 +32,16 @@ date_default_timezone_set('Europe/London');
 // User configuration section
 ////
 
-define('APP__WWW', $_ENV['APP_WWW']);
+// Detect APP__WWW dynamically when using localhost/127.0.0.1
+$www_base = $_ENV['APP_WWW'];
+if (preg_match('#^https?://(localhost|127\.0\.0\.1)(:\d+)?/?$#i', $www_base)) {
+    // Detect actual request host for remote access support
+    $proto = isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https' ? 'https' : 'http';
+    $host  = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    // APP__WWW is always the app root (web root), not the subdirectory of the current file
+    $www_base = $proto . '://' . $host;
+}
+define('APP__WWW', $www_base);
 define('DOC__ROOT', $_ENV['DOC_ROOT']); //must include the trailing /
 define('CUSTOM_CSS', $_ENV['CUSTOM_CSS_PATH']);  // Optional custom CSS file
 define('SESSION_NAME', $_ENV['SESSION_NAME']);
