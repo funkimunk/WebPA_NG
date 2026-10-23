@@ -79,11 +79,11 @@ if (!$assessments) {
             $num_members =  (array_key_exists($assessment->id, $members)) ? $members[$assessment->id] : 0 ;
             $completed_msg = ($num_responses==$num_members) ? '- <strong>COMPLETED</strong>' : '';
 
-            $edit_url = "edit/edit_assessment.php?a={$assessment->id}&{$qs}";
-            $email_url = "email/index.php?a={$assessment->id}&{$qs}";
-            $responded_url = "students_who_responded.php?a={$assessment->id}&{$qs}";
-            $groupmark_url = "marks/set_group_marks.php?a={$assessment->id}&{$qs}";
-            $delete_marks_url = "delete_marks.php?a={$assessment->id}&{$qs}"; ?>
+            $edit_url = "edit/edit_assessment.php?a={$assessment->id}&$qs";
+            $email_url = "email/index.php?a={$assessment->id}&$qs";
+            $responded_url = "students_who_responded.php?a={$assessment->id}&$qs";
+            $groupmark_url = "marks/set_group_marks.php?a={$assessment->id}&$qs";
+            $delete_marks_url = "delete_marks.php?a={$assessment->id}&$qs"; ?>
     <div class="obj">
       <table class="obj" cellpadding="2" cellspacing="2">
       <tr>

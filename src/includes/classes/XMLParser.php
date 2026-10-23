@@ -123,7 +123,7 @@ class XMLParser
                 } else {
                     $tag = $prior_key ? $prior_key : $key;
                     $tab_indent = str_repeat("\t", $level);
-                    echo "{$tab_indent}<{$tag}";
+                    echo "$tab_indent<$tag";
 
                     // Get a list of all the sub-arrays
                     $sub_array = array_flip(array_keys((array) $value));
@@ -146,7 +146,7 @@ class XMLParser
                     // If there are still sub-arrays then they're probably tags, so process them
                     if (count($sub_array) > 0) {
                         echo ">\n";  // ->generate_xml returns the xml by reference, so need to do this in two halves
-                        echo $this->generate_xml($value, $level + 1) . "{$tab_indent}</$tag>\n";
+                        echo $this->generate_xml($value, $level + 1) . "$tab_indent</$tag>\n";
                     } else {  // need to process the tag value
                         // If the tag has no value, show an empty tag
                         if (!$tag_data) {
@@ -154,7 +154,7 @@ class XMLParser
                         } else {
                             // If this tag has been highlighted as a CDATA tag, use CDATA
                             if (in_array($tag, $this->_cdata_tags)) {
-                                echo "><![CDATA[{$tag_data}]]></$tag>\n";
+                                echo "><![CDATA[$tag_data]]></$tag>\n";
                             } else {  // Else, just use the value
                                 echo '>' . htmlspecialchars($tag_data) . "</$tag>\n";
                             }

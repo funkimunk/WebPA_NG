@@ -27,7 +27,7 @@ $collection_id = Common::fetch_GET('c');
 
 $command = Common::fetch_POST('command');
 
-$collection_qs = "c={$collection_id}";
+$collection_qs = "c=$collection_id";
 $collection_url = "edit_collection.php?$collection_qs";
 
 // --------------------------------------------------------------------------------

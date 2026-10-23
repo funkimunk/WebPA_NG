@@ -54,13 +54,13 @@ class WizardStep3
 
         $new_question['text']['_data'] = $this->wizard->get_field('question_text');
         $new_question['desc']['_data'] = $this->wizard->get_field('question_desc');
-        $new_question['range']['_data'] = "{$range_start}-{$range_end}";
+        $new_question['range']['_data'] = "$range_start-$range_end";
 
         for ($i=$range_start; $i<=$range_end; $i++) {
-            $scorelabel = trim(Common::fetch_POST("scorelabel{$i}"));
+            $scorelabel = trim(Common::fetch_POST("scorelabel$i"));
 
             if (!empty($scorelabel)) {
-                $new_question["scorelabel{$i}"]['_data'] = $scorelabel;
+                $new_question["scorelabel$i"]['_data'] = $scorelabel;
             }
         }
 

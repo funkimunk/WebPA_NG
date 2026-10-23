@@ -61,7 +61,8 @@ class Wizard
         $this->name = $name;
         $this->_page_url = $_SERVER['PHP_SELF'];
 
-        $this->_fields = unserialize(base64_decode(Common::fetch_POST('wiz_stored_fields', null)));
+        $stored = Common::fetch_POST('wiz_stored_fields', null);
+        $this->_fields = is_string($stored) ? unserialize(base64_decode($stored)) : [];
         if (!is_array($this->_fields)) {
             $this->_fields = [];
         }
@@ -198,7 +199,8 @@ class Wizard
             if (($do_last) && ($this->_current_step>1)) {
                 $last_wiz_num = $this->_current_step - 1;
                 include_once $this->_step_includes["$last_wiz_num"];
-                eval("\$this->_last_wizstep = new WizardStep{$last_wiz_num}(\$this);");
+                $class_name = 'WizardStep' . $last_wiz_num;
+                $this->_last_wizstep = new $class_name($this);
 
                 if ($this->_last_wizstep) {
                     $this->_errors = $this->_last_wizstep->process_form();
@@ -215,7 +217,8 @@ class Wizard
             if ($do_next) {
                 // get the current step
                 include_once $this->_step_includes["{$this->_current_step}"];
-                eval("\$this->_current_wizstep = new WizardStep{$this->_current_step}(\$this);");
+                $class_name = 'WizardStep' . $this->_current_step;
+                $this->_current_wizstep = new $class_name($this);
             }
         }
 

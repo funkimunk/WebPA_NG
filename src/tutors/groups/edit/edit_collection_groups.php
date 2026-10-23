@@ -25,7 +25,7 @@ $collection_id = Common::fetch_GET('c');
 
 $command = Common::fetch_POST('command');
 
-$collection_url = "edit_collection.php?c={$collection_id}";
+$collection_url = "edit_collection.php?c=$collection_id";
 
 // --------------------------------------------------------------------------------
 
@@ -163,7 +163,7 @@ if (!$collection) {
 
         if (is_array($groups)) {
             foreach ($groups as $i => $group) {
-                $group_qs = "{$collection_qs}&g={$group['group_id']}";
+                $group_qs = "$collection_qs&g={$group['group_id']}";
                 echo '<tr>';
                 echo "<td><a href=\"edit_group.php?$group_qs\">{$group['group_name']}</a></td>";
                 echo "<td align=\"center\"><input type=\"checkbox\" name=\"group[]\" id=\"group_{$group['group_id']}\" value=\"{$group['group_id']}\" /></td>";

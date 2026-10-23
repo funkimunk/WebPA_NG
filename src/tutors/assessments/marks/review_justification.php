@@ -29,7 +29,7 @@ $year = Common::fetch_GET('y', date('Y'));
 
 $command = Common::fetch_POST('command');
 
-$list_url = "../index.php?tab={$tab}&y={$year}";
+$list_url = "../index.php?tab=$tab&y=$year";
 
 $errors = null;
 

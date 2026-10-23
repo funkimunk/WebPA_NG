@@ -39,9 +39,8 @@ if ($assessment->load($assessment_id)) {
 $UI->page_title = APP__NAME . ' ' . ($assessment) ? $assessment->name : 'not open';
 $UI->menu_selected = 'my assessments';
 $UI->help_link = '?q=node/329';
-$UI->breadcrumbs = ['home'       => '/',
-               $assessment->name  => null,
-              ];
+$UI->breadcrumbs = ['home'       => '../',
+               $assessment->name  => null, ];
 
 $UI->head();
 $UI->content_start();

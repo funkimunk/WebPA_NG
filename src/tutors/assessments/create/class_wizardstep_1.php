@@ -63,19 +63,19 @@ class WizardStep1
             echo '<table cellpadding="0" cellspacing="0"><tr>';
 
             // Draw day box
-            echo "<td><select name=\"{$field_name}_day\">";
+            echo "<td><select name=\"$field_name_day\">";
             Form::render_options_range(1, 31, 1, date('j', $selected_datetime));
             echo '</select></td>';
 
             $form_months = [1 => 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
             // Draw month box
-            echo "<td><select name=\"{$field_name}_month\">";
+            echo "<td><select name=\"$field_name_month\">";
             Form::render_options($form_months, date('n', $selected_datetime));
             echo '</select></td>';
 
             // Draw year box
-            echo "<td><select name=\"{$field_name}_year\">";
+            echo "<td><select name=\"$field_name_year\">";
             Form::render_options_range(date('Y', time()), date('Y', time())+1, 1, date('Y', $selected_datetime));
             echo '</select></td>';
 
@@ -87,7 +87,7 @@ class WizardStep1
             $time_h = (int) $time_parts[0];
             $time_m = (int) $time_parts[1];
 
-            echo "<td><select name=\"{$field_name}_time\">";
+            echo "<td><select name=\"$field_name_time\">";
             for ($i=0; $i<=23; $i++) {
                 for ($j=0; $j<=45; $j=$j+15) {
                     $selected = (($i == $time_h) && ($j == $time_m)) ? 'selected="selected"' : '' ;

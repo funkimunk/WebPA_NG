@@ -401,7 +401,7 @@ class GroupCollection
         if (!$this->_groups) {
             $this->_groups = [];
         }
-        uasort($this->_groups, ['self', 'group_title_natural_sort']);
+        uasort($this->_groups, [self::class, 'group_title_natural_sort']);
     }
 
     // /->refresh_groups()

@@ -34,7 +34,7 @@ $assessment_id = Common::fetch_GET('a');
 
 $user_id = Common::fetch_GET('u');
 
-$list_url = "index.php?tab={$tab}&y={$year}";
+$list_url = "index.php?tab=$tab&y=$year";
 
 // --------------------------------------------------------------------------------
 
@@ -70,7 +70,7 @@ if (!empty($user_id)) {
 $assessment = new Assessment($DB);
 
 if ($assessment->load($assessment_id)) {
-    $assessment_qs = "a={$assessment->id}&tab={$tab}&y={$year}";
+    $assessment_qs = "a={$assessment->id}&tab=$tab&y=$year";
 
     $group_handler = new GroupHandler();
     $collection = $group_handler->get_collection($assessment->get_collection_id());
@@ -93,8 +93,8 @@ if ($assessment->load($assessment_id)) {
 $UI->page_title = APP__NAME . ' ' . 'students who responded';
 $UI->menu_selected = 'my assessments';
 $UI->help_link = '?q=node/235';
-$UI->breadcrumbs = ['home'           => '/',
-               'my assessments'     => $list_url,
+$UI->breadcrumbs = ['home'           => '../../',
+               'my assessments'     => '../',
                'students who responded' => null, ];
 
 $UI->set_page_bar_button('List Assessments', '../../../images/buttons/button_assessment_list.gif', '../');
@@ -150,7 +150,7 @@ $UI->content_start();
             if (in_array($member['user_id'], (array) $responded_users)) {
                 $responded_img = '<img src="../../images/icons/tick.gif" width="16" height="16" alt="Responded" />';
                 $responded_class = 'class="responded"';
-                $allowDelete = "<a href=\"delete_marks.php?a={$assessment_id}&tab={$tab}&y={$year}&u={$member['user_id']}\" ><img src=\"../../images/icons/cancel.png\" width=\"16\" height=\"16\" alt=\"Delete submission\" /></a>";
+                $allowDelete = "<a href=\"delete_marks.php?a=$assessment_id&tab=$tab&y=$year&u={$member['user_id']}\" ><img src=\"../../images/icons/cancel.png\" width=\"16\" height=\"16\" alt=\"Delete submission\" /></a>";
             } else {
                 $responded_img = '<img src="../../images/icons/cross.gif" width="16" height="16" alt="Not Responded"/>';
                 $responded_class = 'class="notresponded"';
@@ -160,7 +160,7 @@ $UI->content_start();
             if (!empty($member['id_number'])) {
                 echo " ({$member['id_number']})";
             }
-            echo "</td><td align=\"center\">$responded_img</td><td>{$allowDelete}</td></tr>";
+            echo "</td><td align=\"center\">$responded_img</td><td>$allowDelete</td></tr>";
         }
               echo '</table><br />';
           }// /if

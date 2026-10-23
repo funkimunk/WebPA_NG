@@ -67,7 +67,7 @@ $this_accademic_year .= APP__ACADEMIC_YEAR_START_MONTH . '-01 00:00:00';
 $dbConn = $DB->getConnection();
 
 // Query 1: Single query to get ALL grouped metrics per assessment using correlated subqueries
-$cache_key = "metrics_report:{$year}:" . md5($_source_id . $this_year . $next_year);
+$cache_key = "metrics_report:$year:" . md5($_source_id . $this_year . $next_year);
 
 if (Cache::has($cache_key)) {
     $metrics = Cache::get($cache_key);
@@ -114,7 +114,7 @@ if (Cache::has($cache_key)) {
 }
 
 // Query 2: Total unique students assessed this year
-$total_students = Cache::get("total_students:{$year}:" . md5($_source_id . $this_year . $next_year));
+$total_students = Cache::get("total_students:$year:" . md5($_source_id . $this_year . $next_year));
 if ($total_students === null) {
     $total_students = $dbConn->fetchOne(
         'SELECT COUNT(DISTINCT ugm.user_id) AS "Total unique students assessed" ' .
@@ -125,11 +125,11 @@ if ($total_students === null) {
         'WHERE m.source_id = ? AND a.open_date >= ? AND a.open_date < ?',
         [$_source_id, $this_year, $next_year]
     );
-    Cache::set("total_students:{$year}:" . md5($_source_id . $this_year . $next_year), $total_students);
+    Cache::set("total_students:$year:" . md5($_source_id . $this_year . $next_year), $total_students);
 }
 
 // Build distinct modules list for the modules report
-$modules_list = Cache::get("modules_list:{$year}:" . md5($_source_id . $this_year . $next_year));
+$modules_list = Cache::get("modules_list:$year:" . md5($_source_id . $this_year . $next_year));
 if ($modules_list === null) {
     $modules_list = $dbConn->fetchAllAssociative(
         'SELECT DISTINCT m.module_code, m.module_title ' .
@@ -139,7 +139,7 @@ if ($modules_list === null) {
         'ORDER BY m.module_code',
         [$_source_id, $this_year, $next_year]
     );
-    Cache::set("modules_list:{$year}:" . md5($_source_id . $this_year . $next_year), $modules_list);
+    Cache::set("modules_list:$year:" . md5($_source_id . $this_year . $next_year), $modules_list);
 }
 
 // Helper: output a table from $rows with given $columns
@@ -181,8 +181,8 @@ function output_table($rows, $columns, $format)
             echo '<metric>';
             $i = 0;
             foreach ($columns as $col) {
-                echo "<field_{$i}>{$col}</field_{$i}>";
-                echo "<value_{$i}>{$row[$col]}</value_{$i}>";
+                echo "<field_$i>$col</field_$i>";
+                echo "<value_$i>{$row[$col]}</value_$i>";
                 $i++;
             }
             echo '</metric>';
@@ -206,7 +206,7 @@ if ($format == 'html') {
     echo '<div class="content_box">';
 
     if (!empty($assessments_run)) {
-        echo "<h2>Assessments run in WebPA ({$academic_year})</h2>";
+        echo "<h2>Assessments run in WebPA ($academic_year)</h2>";
         output_table($metrics, ['assessment_name', 'module_code', 'module_title', 'open_date', 'close_date'], 'html');
     }
 
@@ -220,7 +220,7 @@ if ($format == 'html') {
                 'group_count' => $m['group_count'],
             ];
         }
-        echo "<h2>Number of groups per assessment ({$academic_year})</h2>";
+        echo "<h2>Number of groups per assessment ($academic_year)</h2>";
         output_table($groups_data, ['assessment_name', 'module_code', 'module_title', 'group_count'], 'html');
     }
 
@@ -234,7 +234,7 @@ if ($format == 'html') {
                 'student_count' => $m['student_count'],
             ];
         }
-        echo "<h2>Number of students per assessment ({$academic_year})</h2>";
+        echo "<h2>Number of students per assessment ($academic_year)</h2>";
         output_table($students_data, ['assessment_name', 'module_code', 'module_title', 'student_count'], 'html');
     }
 
@@ -249,7 +249,7 @@ if ($format == 'html') {
                 ];
             }
         }
-        echo "<h2>Assessments where feedback has been used ({$academic_year})</h2>";
+        echo "<h2>Assessments where feedback has been used ($academic_year)</h2>";
         output_table($feedback_data, ['assessment_name', 'module_code', 'module_title'], 'html');
     }
 
@@ -263,17 +263,17 @@ if ($format == 'html') {
                 'respondent_count' => $m['respondent_count'],
             ];
         }
-        echo "<h2>Number of Respondents per assessment ({$academic_year})</h2>";
+        echo "<h2>Number of Respondents per assessment ($academic_year)</h2>";
         output_table($respondents_data, ['assessment_name', 'module_code', 'module_title', 'respondent_count'], 'html');
     }
 
     if (!empty($assessment_modules)) {
-        echo "<h2>Modules which have run an assessment ({$academic_year})</h2>";
+        echo "<h2>Modules which have run an assessment ($academic_year)</h2>";
         output_table($modules_list, ['module_code', 'module_title'], 'html');
     }
 
     if (!empty($assessment_students_thisyear)) {
-        echo "<h2>Number of students who have carried out an assessment ({$academic_year})</h2>";
+        echo "<h2>Number of students who have carried out an assessment ($academic_year)</h2>";
         if ($total_students) {
             if ($format === 'html') {
                 echo '<table class="grid"><tr><td>' . htmlspecialchars((string) $total_students) . '</td></tr></table>';
@@ -298,7 +298,7 @@ if ($format == 'csv') {
     echo '"WebPA - Metrics report"' . "\n";
 
     if (!empty($assessments_run)) {
-        echo "\n\"Assessments run in WebPA ({$academic_year})\"\n";
+        echo "\n\"Assessments run in WebPA ($academic_year)\"\n";
         output_table($metrics, ['assessment_name', 'module_code', 'module_title', 'open_date', 'close_date'], 'csv');
     }
 
@@ -312,7 +312,7 @@ if ($format == 'csv') {
                 'group_count' => $m['group_count'],
             ];
         }
-        echo "\n\"Number of groups per assessment ({$academic_year})\"\n";
+        echo "\n\"Number of groups per assessment ($academic_year)\"\n";
         output_table($groups_data, ['assessment_name', 'module_code', 'module_title', 'group_count'], 'csv');
     }
 
@@ -326,7 +326,7 @@ if ($format == 'csv') {
                 'student_count' => $m['student_count'],
             ];
         }
-        echo "\n\"Number of students per assessment ({$academic_year})\"\n";
+        echo "\n\"Number of students per assessment ($academic_year)\"\n";
         output_table($students_data, ['assessment_name', 'module_code', 'module_title', 'student_count'], 'csv');
     }
 
@@ -341,7 +341,7 @@ if ($format == 'csv') {
                 ];
             }
         }
-        echo "\n\"Assessments where feedback has been used ({$academic_year})\"\n";
+        echo "\n\"Assessments where feedback has been used ($academic_year)\"\n";
         output_table($feedback_data, ['assessment_name', 'module_code', 'module_title'], 'csv');
     }
 
@@ -355,17 +355,17 @@ if ($format == 'csv') {
                 'respondent_count' => $m['respondent_count'],
             ];
         }
-        echo "\n\"Number of respondents per assessment ({$academic_year})\"\n";
+        echo "\n\"Number of respondents per assessment ($academic_year)\"\n";
         output_table($respondents_data, ['assessment_name', 'module_code', 'module_title', 'respondent_count'], 'csv');
     }
 
     if (!empty($assessment_modules)) {
-        echo "\n\"Modules which have run an assessment ({$academic_year})\"\n";
+        echo "\n\"Modules which have run an assessment ($academic_year)\"\n";
         output_table($modules_list, ['module_code', 'module_title'], 'csv');
     }
 
     if (!empty($assessment_students_thisyear)) {
-        echo "\n\"Number of students who have carried out an assessment ({$academic_year})\"\n";
+        echo "\n\"Number of students who have carried out an assessment ($academic_year)\"\n";
         if ($total_students) {
             echo '"' . $total_students . "\"\n";
         }
@@ -381,7 +381,7 @@ if ($format == 'rtf') {
     echo 'WebPA - Metrics report' . "\n\n";
 
     if (!empty($assessments_run)) {
-        echo "\nAssessments run in WebPA ({$academic_year})\n\n";
+        echo "\nAssessments run in WebPA ($academic_year)\n\n";
         output_table($metrics, ['assessment_name', 'module_code', 'module_title', 'open_date', 'close_date'], 'rtf');
     }
 
@@ -395,7 +395,7 @@ if ($format == 'rtf') {
                 'group_count' => $m['group_count'],
             ];
         }
-        echo "\nNumber of groups per assessment ({$academic_year})\n\n";
+        echo "\nNumber of groups per assessment ($academic_year)\n\n";
         output_table($groups_data, ['assessment_name', 'module_code', 'module_title', 'group_count'], 'rtf');
     }
 
@@ -409,7 +409,7 @@ if ($format == 'rtf') {
                 'student_count' => $m['student_count'],
             ];
         }
-        echo "\nNumber of students per assessment ({$academic_year})\n\n";
+        echo "\nNumber of students per assessment ($academic_year)\n\n";
         output_table($students_data, ['assessment_name', 'module_code', 'module_title', 'student_count'], 'rtf');
     }
 
@@ -424,7 +424,7 @@ if ($format == 'rtf') {
                 ];
             }
         }
-        echo "\nAssessments where feedback has been used ({$academic_year})\n\n";
+        echo "\nAssessments where feedback has been used ($academic_year)\n\n";
         output_table($feedback_data, ['assessment_name', 'module_code', 'module_title'], 'rtf');
     }
 
@@ -438,17 +438,17 @@ if ($format == 'rtf') {
                 'respondent_count' => $m['respondent_count'],
             ];
         }
-        echo "\nNumber of Respondents per assessment ({$academic_year})\n\n";
+        echo "\nNumber of Respondents per assessment ($academic_year)\n\n";
         output_table($respondents_data, ['assessment_name', 'module_code', 'module_title', 'respondent_count'], 'rtf');
     }
 
     if (!empty($assessment_modules)) {
-        echo "\nModules which have run an assessment ({$academic_year})\n\n";
+        echo "\nModules which have run an assessment ($academic_year)\n\n";
         output_table($modules_list, ['module_code', 'module_title'], 'rtf');
     }
 
     if (!empty($assessment_students_thisyear)) {
-        echo "\nNumber of students who have carried out an assessment ({$academic_year})\n\n";
+        echo "\nNumber of students who have carried out an assessment ($academic_year)\n\n";
         if ($total_students) {
             echo $total_students . "\n";
         }
@@ -466,14 +466,14 @@ if ($format == 'xml') {
 
     if (!empty($assessments_run)) {
         echo '<metrics>';
-        echo "<description>Assessments run in WebPA ({$academic_year})</description>";
+        echo "<description>Assessments run in WebPA ($academic_year)</description>";
         $columns = ['assessment_name', 'module_code', 'module_title', 'open_date', 'close_date'];
         foreach ($metrics as $m) {
             echo '<metric>';
             $i = 0;
             foreach ($columns as $col) {
-                echo "<field_{$i}>{$col}</field_{$i}>";
-                echo "<value_{$i}>{$m[$col]}</value_{$i}>";
+                echo "<field_$i>$col</field_$i>";
+                echo "<value_$i>{$m[$col]}</value_$i>";
                 $i++;
             }
             echo '</metric>';
@@ -492,14 +492,14 @@ if ($format == 'xml') {
             ];
         }
         echo '<metrics>';
-        echo "<description>Number of groups per assessment ({$academic_year})</description>";
+        echo "<description>Number of groups per assessment ($academic_year)</description>";
         $columns = ['assessment_name', 'module_code', 'module_title', 'group_count'];
         foreach ($groups_data as $m) {
             echo '<metric>';
             $i = 0;
             foreach ($columns as $col) {
-                echo "<field_{$i}>{$col}</field_{$i}>";
-                echo "<value_{$i}>{$m[$col]}</value_{$i}>";
+                echo "<field_$i>$col</field_$i>";
+                echo "<value_$i>{$m[$col]}</value_$i>";
                 $i++;
             }
             echo '</metric>';
@@ -518,14 +518,14 @@ if ($format == 'xml') {
             ];
         }
         echo '<metrics>';
-        echo "<description>Number of students per assessment ({$academic_year})</description>";
+        echo "<description>Number of students per assessment ($academic_year)</description>";
         $columns = ['assessment_name', 'module_code', 'module_title', 'student_count'];
         foreach ($students_data as $m) {
             echo '<metric>';
             $i = 0;
             foreach ($columns as $col) {
-                echo "<field_{$i}>{$col}</field_{$i}>";
-                echo "<value_{$i}>{$m[$col]}</value_{$i}>";
+                echo "<field_$i>$col</field_$i>";
+                echo "<value_$i>{$m[$col]}</value_$i>";
                 $i++;
             }
             echo '</metric>';
@@ -545,14 +545,14 @@ if ($format == 'xml') {
             }
         }
         echo '<metrics>';
-        echo "<description>Assessments where feedback has been used ({$academic_year})</description>";
+        echo "<description>Assessments where feedback has been used ($academic_year)</description>";
         $columns = ['assessment_name', 'module_code', 'module_title'];
         foreach ($feedback_data as $m) {
             echo '<metric>';
             $i = 0;
             foreach ($columns as $col) {
-                echo "<field_{$i}>{$col}</field_{$i}>";
-                echo "<value_{$i}>{$m[$col]}</value_{$i}>";
+                echo "<field_$i>$col</field_$i>";
+                echo "<value_$i>{$m[$col]}</value_$i>";
                 $i++;
             }
             echo '</metric>';
@@ -571,14 +571,14 @@ if ($format == 'xml') {
             ];
         }
         echo '<metrics>';
-        echo "<description>Number of Respondents per assessment ({$academic_year})</description>";
+        echo "<description>Number of Respondents per assessment ($academic_year)</description>";
         $columns = ['assessment_name', 'module_code', 'module_title', 'respondent_count'];
         foreach ($respondents_data as $m) {
             echo '<metric>';
             $i = 0;
             foreach ($columns as $col) {
-                echo "<field_{$i}>{$col}</field_{$i}>";
-                echo "<value_{$i}>{$m[$col]}</value_{$i}>";
+                echo "<field_$i>$col</field_$i>";
+                echo "<value_$i>{$m[$col]}</value_$i>";
                 $i++;
             }
             echo '</metric>';
@@ -588,13 +588,13 @@ if ($format == 'xml') {
 
     if (!empty($assessment_modules)) {
         echo '<metrics>';
-        echo "<description>Modules which have run an assessment ({$academic_year})</description>";
+        echo "<description>Modules which have run an assessment ($academic_year)</description>";
         foreach ($modules_list as $m) {
             echo '<metric>';
             $i = 0;
             foreach (['module_code', 'module_title'] as $col) {
-                echo "<field_{$i}>{$col}</field_{$i}>";
-                echo "<value_{$i}>{$m[$col]}</value_{$i}>";
+                echo "<field_$i>$col</field_$i>";
+                echo "<value_$i>{$m[$col]}</value_$i>";
                 $i++;
             }
             echo '</metric>';
@@ -604,11 +604,11 @@ if ($format == 'xml') {
 
     if (!empty($assessment_students_thisyear)) {
         echo '<metrics>';
-        echo "<description>Number of students who have carried out an assessment ({$academic_year})</description>";
+        echo "<description>Number of students who have carried out an assessment ($academic_year)</description>";
         if ($total_students) {
             echo '<metric>';
             echo '<field_0>Total unique students assessed</field_0>';
-            echo "<value_0>{$total_students}</value_0>";
+            echo "<value_0>$total_students</value_0>";
             echo '</metric>';
         }
         echo '</metrics>';

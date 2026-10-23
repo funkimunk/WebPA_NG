@@ -29,7 +29,7 @@ $group_id = Common::fetch_GET('g');
 
 $command = Common::fetch_POST('command');
 
-$collection_url = "edit_collection.php?c={$collection_id}";
+$collection_url = "edit_collection.php?c=$collection_id";
 
 // --------------------------------------------------------------------------------
 
@@ -163,7 +163,7 @@ if ($collection->is_locked()) {
 if (!$group) {
     echo Tutors::GROUP__SELECTED;
 } else {
-    $group_qs = "{$collection_qs}&g={$group->id}"; ?>
+    $group_qs = "$collection_qs&g={$group->id}"; ?>
 
   <form action="edit_group.php?<?php echo $group_qs; ?>" method="post" name="group_form">
   <input type="hidden" name="command" value="none" />

@@ -129,7 +129,7 @@ if ($type == 'view') {
     foreach ($questions as $question_id => $question) {
         $q_index = $question_id+1;
 
-        echo "<p>Q{$q_index} : {$question['text']['_data']}"; ?>
+        echo "<p>Q$q_index : {$question['text']['_data']}"; ?>
         <?= array_key_exists('range', $question) ? "(range: {$question['range']['_data']})" : '' ?>
         </p>
         <table class="grid" cellpadding="2" cellspacing="1" style="font-size: 0.8em">
@@ -232,7 +232,7 @@ if ($type == 'download-csv') {
             $q_index = $question_id+1;
 
             echo "\n";
-            echo "\"Q{$q_index} : {$question['text']['_data']}";
+            echo "\"Q$q_index : {$question['text']['_data']}";
 
             if (array_key_exists('range', $question)) {
                 echo "(range: {$question['range']['_data']})\"\n";

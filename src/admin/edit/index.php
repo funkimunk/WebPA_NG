@@ -327,7 +327,7 @@ if ($type == APP__USER_TYPE_ADMIN) {
 echo '<p>' . $page_conditions . '</p>';
 
 if (!empty($sScreenMsg)) {
-    echo "<div class=\"success_box\">{$sScreenMsg}</div>";
+    echo "<div class=\"success_box\">$sScreenMsg</div>";
 }
 ?>
 
@@ -436,27 +436,27 @@ if (!empty($user_id) && !Common::check_user($edit_user, APP__USER_TYPE_ADMIN)) {
         }
 
         echo "<tr>\n";
-        echo "  <td>\n    {$tagStart}{$module['module_title']}{$tagEnd}&nbsp;&nbsp;&nbsp;\n  </td>\n";
+        echo "  <td>\n    $tagStart{$module['module_title']}$tagEnd&nbsp;&nbsp;&nbsp;\n  </td>\n";
         echo "  <td style=\"text-align: center;\">\n";
         echo '    <input type="radio" value="" name="rdo_type_' . $module['module_id'] . '"';
         if (empty($role)) {
             echo ' checked="checked"';
         }
-        echo "{$disabled}>\n";
+        echo "$disabled>\n";
         echo "  </td>\n";
         echo "  <td style=\"text-align: center;\">\n";
         echo '    <input type="radio" value="' . APP__USER_TYPE_TUTOR . '" name="rdo_type_' . $module['module_id'] . '"';
         if ($role == APP__USER_TYPE_TUTOR) {
             echo ' checked="checked"';
         }
-        echo "{$disabled}>\n";
+        echo "$disabled>\n";
         echo "  </td>\n";
         echo "  <td style=\"text-align: center;\">\n";
         echo '    <input type="radio" value="' . APP__USER_TYPE_STUDENT . '" name="rdo_type_' . $module['module_id'] . '"';
         if ($role == APP__USER_TYPE_STUDENT) {
             echo ' checked="checked"';
         }
-        echo "{$disabled}>\n";
+        echo "$disabled>\n";
         echo "  </td>\n";
         echo "</tr>\n";
     }

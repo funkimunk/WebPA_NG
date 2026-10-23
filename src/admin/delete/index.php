@@ -98,7 +98,7 @@ $page_intro = '';
 <?php
 
   if (!empty($sScreenMsg)) {
-      echo "<div class=\"success_box\">{$sScreenMsg}</div>";
+      echo "<div class=\"success_box\">$sScreenMsg</div>";
   }
 
   if (isset($errorMsg) && strlen($errorMsg) > 0) {
