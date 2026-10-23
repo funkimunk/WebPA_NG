@@ -373,13 +373,22 @@ if (($command) && ($assessment)) {
 // --------------------------------------------------------------------------------
 // Begin Page
 
-$UI->page_title = APP__NAME . ' ' . $assessment->name;
-$UI->menu_selected = 'my assessments';
-$UI->help_link = '?q=node/329';
-$UI->breadcrumbs = [
-  'home'             => '../',
-  $assessment->name  => null,
-];
+if ($assessment) {
+    $UI->page_title = APP__NAME . ' ' . $assessment->name;
+    $UI->menu_selected = 'my assessments';
+    $UI->help_link = '?q=node/329';
+    $UI->breadcrumbs = [
+      'home'             => '../',
+      $assessment->name  => null,
+    ];
+} else {
+    $UI->page_title = APP__NAME . ' Assessment';
+    $UI->menu_selected = 'my assessments';
+    $UI->help_link = '?q=node/329';
+    $UI->breadcrumbs = [
+      'home' => '../',
+    ];
+}
 
 $UI->head();
 ?>
