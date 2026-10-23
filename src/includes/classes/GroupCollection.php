@@ -34,6 +34,8 @@ class GroupCollection
 
     private $_groups;
 
+    private $_group = [];
+
     private $_group_objects;
 
     private $_created_on;

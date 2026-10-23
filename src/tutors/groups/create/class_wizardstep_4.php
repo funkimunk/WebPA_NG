@@ -71,7 +71,7 @@ class WizardStep4
             $group_names = $group_handler->generate_group_names($num_groups, $this->wizard->get_field('group_name_stub'), $this->wizard->get_field('group_numbering'));
         }
 
-        $collection =& $group_handler->create_collection();
+        $collection = $group_handler->create_collection();
         $collection->module_id = $this->moduleId;
         $collection->name = $this->wizard->get_field('collection_name');
 
