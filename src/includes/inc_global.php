@@ -167,6 +167,12 @@ $_config['app_www'] = APP__WWW;
 // Initialisation
 
 session_name(SESSION_NAME);
+
+// Session security and performance settings
+ini_set('session.cookie_httponly', '1');
+ini_set('session.use_strict_mode', '1');
+ini_set('session.gc_maxlifetime', '86400'); // 24 hours
+
 session_start();
 
 // Initialise DB object
